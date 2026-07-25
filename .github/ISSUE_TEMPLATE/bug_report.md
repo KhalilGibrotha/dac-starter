@@ -31,4 +31,3 @@ Describe the problem clearly.
 ## Notes
 
 Add logs, screenshots, or example markdown if useful.
-

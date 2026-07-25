@@ -12,4 +12,3 @@ Describe what changed and why.
 ## Validation
 
 List the commands or manual checks you ran.
-

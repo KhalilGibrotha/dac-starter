@@ -30,4 +30,3 @@ This checklist verifies [scope] before, during, or after [activity].
 | 1 | | | |
 
 ## Verification
-

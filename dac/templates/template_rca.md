@@ -38,4 +38,3 @@ This procedure documents the analysis of [incident].
 | Action | Owner | Due Date | Status |
 |---|---|---|---|
 | | | | |
-

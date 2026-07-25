@@ -27,11 +27,11 @@ This standard defines mandatory requirements for [subject area].
 
 **In scope:**
 
-- 
+-
 
 **Out of scope:**
 
-- 
+-
 
 ## Authority and Enforcement
 
@@ -64,4 +64,3 @@ This standard defines mandatory requirements for [subject area].
 | Check | Method | Frequency |
 |---|---|---|
 | | | |
-

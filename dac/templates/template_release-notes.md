@@ -21,17 +21,16 @@ author: "Author Name"
 
 ## New Features
 
-- 
+-
 
 ## Fixes
 
-- 
+-
 
 ## Known Issues
 
-- 
+-
 
 ## Upgrade Notes
 
-- 
-
+-

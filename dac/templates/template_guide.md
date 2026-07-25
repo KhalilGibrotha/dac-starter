@@ -30,4 +30,3 @@ This guide walks a reader through [topic] from a cold start.
 ## Verification
 
 ## Next Steps
-

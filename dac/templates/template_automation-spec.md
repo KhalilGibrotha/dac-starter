@@ -38,4 +38,3 @@ author: "Author Name"
 ## Error Handling
 
 ## Verification
-

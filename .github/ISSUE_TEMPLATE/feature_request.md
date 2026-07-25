@@ -25,4 +25,3 @@ Describe the improvement.
 ## Why This Belongs in the Starter
 
 Explain why this should be generic and reusable across teams.
-
