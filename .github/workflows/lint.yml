@@ -2,60 +2,54 @@ name: Lint
 
 on:
   pull_request:
-    branches:
-      - develop
-      - main
-      - master
   push:
     branches:
-      - develop
       - main
 
+# Every job runs inside the published toolchain image — the same tools, same
+# versions, as the Dev Spaces workspace. No per-job installs to drift.
 jobs:
-  vale:
-    name: Vale prose lint
+  frontmatter:
+    name: Front matter validation
     runs-on: ubuntu-latest
+    container: ghcr.io/khalilgibrotha/dac-toolkit:latest
     steps:
       - uses: actions/checkout@v4
-
-      - name: Install Vale
-        run: |
-          wget -qO- https://github.com/errata-ai/vale/releases/download/v3.14.0/vale_3.14.0_Linux_64-bit.tar.gz \
-            | tar -xz vale
-          sudo mv vale /usr/local/bin/
-
-      - name: Sync Vale packages
-        run: vale sync
-
-      - name: Run Vale
-        run: python scripts/lint-prose.py --no-exit
+      - run: lint-frontmatter.py --path .
 
   mermaid:
     name: Mermaid preflight
     runs-on: ubuntu-latest
+    container: ghcr.io/khalilgibrotha/dac-toolkit:latest
     steps:
       - uses: actions/checkout@v4
+      - run: lint-mermaid.py --path .
 
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-
-      - name: Validate Mermaid fences
-        run: python scripts/lint-mermaid.py --path .
-
-  frontmatter:
-    name: Front matter validation
+  encoding:
+    name: Encoding artifacts
     runs-on: ubuntu-latest
+    container: ghcr.io/khalilgibrotha/dac-toolkit:latest
     steps:
       - uses: actions/checkout@v4
+      - run: lint-encoding.py --path .
 
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
+  markdown:
+    name: Markdown lint
+    runs-on: ubuntu-latest
+    container: ghcr.io/khalilgibrotha/dac-toolkit:latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: markdownlint-cli2 "**/*.md" "!dac/vale" "!exports" "!archive"
 
-      - name: Install PyYAML
-        run: pip install pyyaml --quiet
-
-      - name: Validate front matter
-        run: python scripts/lint-frontmatter.py --path .
-
+  vale:
+    name: Vale prose lint (advisory)
+    runs-on: ubuntu-latest
+    container: ghcr.io/khalilgibrotha/dac-toolkit:latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Sync Vale packages
+        run: vale sync
+      - name: Run Vale
+        # Advisory: findings appear in the log without failing the job.
+        # Tighten to blocking once the team has tuned the rules.
+        run: vale docs/ decisions/ governance/ initiatives/ patterns/ references/ || true

@@ -64,7 +64,7 @@ author: "Author Name"
 When you do want document output:
 
 ```bash
-docx-build <file>.md --org vars/org.yaml --output exports/<file>.docx
+docx-build <file>.md --org dac/org.yaml --output exports/<file>.docx
 ```
 
 Or use wrapper tooling from `dac-toolkit` for batch and manifest-based flows.

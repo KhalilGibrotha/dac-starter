@@ -1,0 +1,30 @@
+# Batch render config for docx-build-all.
+#
+# This file lives in dac/ (the DaC machinery folder). docx-build-all finds it
+# here automatically, and every relative path below is anchored at the REPO
+# ROOT, not at dac/ — so scan: docs/ means <repo>/docs. A config at the repo
+# root would win if both existed; keep exactly one.
+#
+# layout: mirror — export paths reproduce the source tree, so a document's
+# export path does not change when it is promoted or revised. Syncing exports/
+# to a document library updates files in place.
+export_root: exports/
+org: dac/org.yaml
+# logo: dac/logo.png            # uncomment after adding your logo
+layout: mirror
+
+scan:
+  - docs/
+  - initiatives/
+  - patterns/
+  - governance/
+  - decisions/
+  - references/
+
+exclude:
+  - dac/
+  - archive/
+
+options:
+  skip_retired: true
+  skip_informational: false

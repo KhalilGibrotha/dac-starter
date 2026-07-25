@@ -1,0 +1,78 @@
+schemaVersion: 2.2.0
+metadata:
+  name: dac-starter
+  displayName: Documentation as Code (starter)
+  description: >
+    Authoring workspace for this content repo. It consumes the pre-built
+    dac-toolkit image — docx_builder, Pandoc, Mermaid CLI, Vale, markdownlint,
+    pre-commit, and the lint scripts are baked in. No toolkit clone, no
+    runtime install. Paste this repo's Git URL into OpenShift Dev Spaces.
+
+# Drop-in "content repo" devfile: the workspace = the published toolchain
+# image + this repo's content. There is intentionally no projects: section —
+# the Dev Spaces factory clones this repo itself.
+
+components:
+  - name: tools
+    container:
+      # Pin to an immutable tag (:<sha>) for reproducibility once you adopt
+      # this in earnest; :latest is fine while iterating.
+      image: ghcr.io/khalilgibrotha/dac-toolkit:latest
+      memoryRequest: 1Gi
+      memoryLimit: 6Gi
+      cpuRequest: 500m
+      cpuLimit: "2"
+      mountSources: true
+      sourceMapping: /projects
+
+commands:
+  - id: build-changed
+    exec:
+      label: "Build changed documents (docx-build-all)"
+      component: tools
+      workingDir: ${PROJECT_SOURCE}
+      commandLine: docx-build-all
+      group:
+        kind: build
+        isDefault: true
+  - id: build-all-force
+    exec:
+      label: "Build ALL documents (docx-build-all --force)"
+      component: tools
+      workingDir: ${PROJECT_SOURCE}
+      commandLine: docx-build-all --force
+      group:
+        kind: build
+  - id: lint-frontmatter
+    exec:
+      label: "Validate YAML front matter"
+      component: tools
+      workingDir: ${PROJECT_SOURCE}
+      commandLine: lint-frontmatter.py --path .
+      group:
+        kind: test
+        isDefault: true
+  - id: lint-mermaid
+    exec:
+      label: "Mermaid diagram preflight"
+      component: tools
+      workingDir: ${PROJECT_SOURCE}
+      commandLine: lint-mermaid.py --path .
+      group:
+        kind: test
+  - id: lint-encoding
+    exec:
+      label: "Encoding artifacts check"
+      component: tools
+      workingDir: ${PROJECT_SOURCE}
+      commandLine: lint-encoding.py --path .
+      group:
+        kind: test
+  - id: lint-prose
+    exec:
+      label: "Prose style (Vale, advisory)"
+      component: tools
+      workingDir: ${PROJECT_SOURCE}
+      commandLine: vale sync && vale docs/ decisions/ governance/ initiatives/ patterns/ references/ || true
+      group:
+        kind: test

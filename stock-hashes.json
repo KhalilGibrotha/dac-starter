@@ -1,0 +1,143 @@
+{
+  ".github/workflows/lint.yml": [
+    "sha256:aa7ce22665a72ffc781fcf45e0adeb84ed429cfef3995a910e67898656311b3c"
+  ],
+  ".markdownlint.json": [
+    "sha256:8f647eadbc47e8a79fd308bb2edb21f4d3545dcdcc0919bfde9f2c42bd72877c"
+  ],
+  ".pre-commit-config.yaml": [
+    "sha256:023fa9e7ca77260c7bbd312b99258f17a709c7f2471a11b16b6d6de3f1628c19"
+  ],
+  ".vale.ini": [
+    "sha256:5e74234b1be4ecd58dc599f5662696a9f812fd797457a7a6d06eea1c2bb4333f"
+  ],
+  ".vscode/extensions.json": [
+    "sha256:37f8570b08ef74ae38417186b6d9075580d38a1cbaee4a14da23a51f0a39e34f"
+  ],
+  ".vscode/settings.json": [
+    "sha256:8336286e390e3fae0cd4f90387ea1624b5ddeb002305d1dd6f1a3da255fbf5f9"
+  ],
+  "dac/README.md": [
+    "sha256:32ff7e79afb5a719e31ff2a4e869574b800c21afc988edc0723abb3982211b82"
+  ],
+  "dac/docx-build.yml": [
+    "sha256:00b098ec1fec9d331052758a3a055c3b5ceba63597956c1da2449923f83a5e15"
+  ],
+  "dac/org.yaml.example": [
+    "sha256:4d996bd110429bbd6d9d87f260a0aab9bba4c5048c0d85911c4b8593d62aa8be"
+  ],
+  "dac/render-manifest.yaml": [
+    "sha256:3af7a546fe9c3680e3596cad308dd5ac8c7767a51f588ed4240133a37ed9fa99"
+  ],
+  "dac/templates/README.md": [
+    "sha256:ff39dab351e2e2c398c357e1f3250e6cc16a44af20226139cd48ff0595ab0283"
+  ],
+  "dac/templates/front-matter/formal.yaml": [
+    "sha256:c560e20bda43ad6162a75b608ef26142a95fd99d9a51beeca3d9667fb4f6da7e"
+  ],
+  "dac/templates/front-matter/informational.yaml": [
+    "sha256:729d5484c27321f5d78317d0579a755dfefa44d9196ee9980fcc01126aa49d3d"
+  ],
+  "dac/templates/front-matter/standard.yaml": [
+    "sha256:d67b46679358690ff8d1a443a8f942ded6c5a7a9d4c4d8793bef15aaad0bb17f"
+  ],
+  "dac/templates/template_adr.md": [
+    "sha256:03a1b5799da44ce9fa27b0701877545ac0217c44855f237edbae15ca038e527d"
+  ],
+  "dac/templates/template_architecture-idea-brief.md": [
+    "sha256:886fa8943f9ae655daddbcaae37fb797a45558ead237f0a8c66deac9f417a594"
+  ],
+  "dac/templates/template_architecture-overview.md": [
+    "sha256:22ee21c089d5b36c3b77fb60530c21d1c8502404d69cad8359ae12b5e784409f"
+  ],
+  "dac/templates/template_automation-discovery.md": [
+    "sha256:0243c8eaab7809516c4789be6af78736e4b2babd3c65f12762f64b35f245b565"
+  ],
+  "dac/templates/template_automation-request.md": [
+    "sha256:1767472f031ef39c76d48d977a42cf1c4867cf4142de95806475f42e01f4b47b"
+  ],
+  "dac/templates/template_automation-spec.md": [
+    "sha256:d20fdb06a34179c4e1b5ba17ecbcedfda5f55260aed943e042952a08f8172157"
+  ],
+  "dac/templates/template_checklist.md": [
+    "sha256:7c0790bed46e3c20a76020cc59aa3c93ce45d5ab3c8838b8284a33b4866d3ab0"
+  ],
+  "dac/templates/template_gap-analysis.md": [
+    "sha256:385455d662eb1cefb213c39a0ca4a888efb4c94644fd741a97d48eb017ac09d7"
+  ],
+  "dac/templates/template_guide.md": [
+    "sha256:3218291bac12be0067317f776d4731c87f5882a16a1254ae474d2a478b09d4df"
+  ],
+  "dac/templates/template_meeting-notes.md": [
+    "sha256:5118ad3a69ee41bb5db558e94e765e88f5517c59c41ff27fc7d702093d1eba02"
+  ],
+  "dac/templates/template_pattern.md": [
+    "sha256:06e86e653dc99009c1565a0b048033ab3a97952beb7a29ad508247b83a8dca6f"
+  ],
+  "dac/templates/template_policy.md": [
+    "sha256:f9486222a368135ac669db8a24cdcbcac27440e8a7c9ef4135bd1859bee5cad5"
+  ],
+  "dac/templates/template_proposal.md": [
+    "sha256:b142e1948d4d96257580ef032a0d9e474ae64ca25d0c14ed4fa73b7a1d192523"
+  ],
+  "dac/templates/template_rca.md": [
+    "sha256:d099fe01d232952ee2694f830dd070e5ae80fb9b4cb4999c571a625660a9e400"
+  ],
+  "dac/templates/template_reference-sheet.md": [
+    "sha256:e69ead995f18213fd05691a53a26e9ea4d42f6f0d1c3fb8ee31c1f49621f5a09"
+  ],
+  "dac/templates/template_release-notes.md": [
+    "sha256:f0d4dfcee67ceb7926743f38e128a7d849f5d43c5e1a2650c6b149b361a08fd7"
+  ],
+  "dac/templates/template_runbook.md": [
+    "sha256:c28ae537cbd6e367c29474fec1d1f885198f7a2dff9d9ecf7a8d1e86c37738c7"
+  ],
+  "dac/templates/template_sad.md": [
+    "sha256:d06db137f6872d49cddb2ba6980585134458ed00a1ade0ca6b8a185758cc6f2e"
+  ],
+  "dac/templates/template_solution-concept.md": [
+    "sha256:20bcd2d65b6604a7a827fc65256ce119eece2f5421344c35210f0547c3b0c532"
+  ],
+  "dac/templates/template_standard.md": [
+    "sha256:010d3049c897972fec10a679a0864e0790f2e8e3771477340abf2d1c411ca84e"
+  ],
+  "dac/vale/styles/DocOps/ConsciousLanguage.yml": [
+    "sha256:ba27f325fa6eb3cb0a92aa6d9e2b39e99f96c3d732980f98552ab09e5c50d64e"
+  ],
+  "dac/vale/styles/DocOps/DeprecatedProductNames.yml": [
+    "sha256:b7c81997072e3a40837115c0892d7113d102344c77da22ec16a6b8fe55a4bfa0"
+  ],
+  "dac/vale/styles/DocOps/FillerPhrases.yml": [
+    "sha256:73b877147e1a524eea2e4b21c3bfbeca8dfe100733056228d38b3389b79a4aa7"
+  ],
+  "dac/vale/styles/DocOps/FutureTense.yml": [
+    "sha256:57bc07412d7bba6c1ff19422c37fd12257ff5c4dde5dabadfb6e5673f38e5295"
+  ],
+  "dac/vale/styles/DocOps/HeadingCapitalization.yml": [
+    "sha256:bac37059857c185b55daf28fe958082bc6de8015c299e0a823e6bc85495ae934"
+  ],
+  "dac/vale/styles/DocOps/HeadingDepth.yml": [
+    "sha256:9706a70846b208612b3fe44ca45255af8eaf7c6031f79f487e916fa611d3a0a6"
+  ],
+  "dac/vale/styles/DocOps/HeadingNumbers.yml": [
+    "sha256:04cfbd5c8226ae768a9a3437973e912c499d064067d5c47b6dd419e5e9074ac3"
+  ],
+  "dac/vale/styles/DocOps/MasterSlave.yml": [
+    "sha256:1610c0aa4d7d379b51d5493654f7be410aa498a98b036e3d5e922684b7330d0a"
+  ],
+  "dac/vale/styles/DocOps/NoShall.yml": [
+    "sha256:3b5bb856c8f379966337cea1794ac6ee9621086dee1de365fcbbdb2cb413873b"
+  ],
+  "dac/vale/styles/DocOps/PlaybookCapitalization.yml": [
+    "sha256:355886466296ca63f1a6526ada567bacebbb659e4da303010e2d7dded72a8545"
+  ],
+  "dac/vale/styles/Vocab/ArchitectureDocs/accept.txt": [
+    "sha256:01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+  ],
+  "dac/vale/styles/Vocab/ArchitectureDocs/reject.txt": [
+    "sha256:01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+  ],
+  "devfile.yaml": [
+    "sha256:fe888bedb776f500621ca6a94648c2c1e4f17f381b5fee6a893dd7d23d776714"
+  ]
+}

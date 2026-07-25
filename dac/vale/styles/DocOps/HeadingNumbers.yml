@@ -1,0 +1,12 @@
+# Rule ID: STRUCT-002 (supplement — manual heading numbers)
+# Severity: Error
+# Flags headings that begin with a manual number prefix (e.g., "# 1. Overview",
+# "## 2) Background", "### 3 - Context"). The docx-build tool auto-numbers all
+# headings; manually numbered headings produce double numbers in DOCX output.
+extends: existence
+message: "Remove the manual number from this heading: '%s'. The docx-build tool numbers headings automatically."
+level: error
+scope: heading
+tokens:
+  - '^\d+[\.\)]\s'
+  - '^\d+\s[-–]\s'
