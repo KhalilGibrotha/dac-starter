@@ -3,7 +3,8 @@
     "sha256:aa7ce22665a72ffc781fcf45e0adeb84ed429cfef3995a910e67898656311b3c"
   ],
   ".markdownlint.json": [
-    "sha256:8f647eadbc47e8a79fd308bb2edb21f4d3545dcdcc0919bfde9f2c42bd72877c"
+    "sha256:8f647eadbc47e8a79fd308bb2edb21f4d3545dcdcc0919bfde9f2c42bd72877c",
+    "sha256:7d38ca165790602d1db487f16e6ba0c28cbb132159f2a5fa72bb63697000bef7"
   ],
   ".pre-commit-config.yaml": [
     "sha256:023fa9e7ca77260c7bbd312b99258f17a709c7f2471a11b16b6d6de3f1628c19"
@@ -87,10 +88,12 @@
     "sha256:e69ead995f18213fd05691a53a26e9ea4d42f6f0d1c3fb8ee31c1f49621f5a09"
   ],
   "dac/templates/template_release-notes.md": [
-    "sha256:f0d4dfcee67ceb7926743f38e128a7d849f5d43c5e1a2650c6b149b361a08fd7"
+    "sha256:f0d4dfcee67ceb7926743f38e128a7d849f5d43c5e1a2650c6b149b361a08fd7",
+    "sha256:29ece565d491ec239ef8c969d08bbf33081460ff44d5a7bdfbfbc47ae4d18899"
   ],
   "dac/templates/template_runbook.md": [
-    "sha256:c28ae537cbd6e367c29474fec1d1f885198f7a2dff9d9ecf7a8d1e86c37738c7"
+    "sha256:c28ae537cbd6e367c29474fec1d1f885198f7a2dff9d9ecf7a8d1e86c37738c7",
+    "sha256:f76e65f06e51e2ed5a3068d0eafc7dc812104c58edd40cbe511980ae586ca189"
   ],
   "dac/templates/template_sad.md": [
     "sha256:d06db137f6872d49cddb2ba6980585134458ed00a1ade0ca6b8a185758cc6f2e"
@@ -99,7 +102,8 @@
     "sha256:20bcd2d65b6604a7a827fc65256ce119eece2f5421344c35210f0547c3b0c532"
   ],
   "dac/templates/template_standard.md": [
-    "sha256:010d3049c897972fec10a679a0864e0790f2e8e3771477340abf2d1c411ca84e"
+    "sha256:010d3049c897972fec10a679a0864e0790f2e8e3771477340abf2d1c411ca84e",
+    "sha256:19550f9565c8ad01a3fbb8387c7fd42eedf11e893e6bcc96179590708b069451"
   ],
   "dac/vale/styles/DocOps/ConsciousLanguage.yml": [
     "sha256:ba27f325fa6eb3cb0a92aa6d9e2b39e99f96c3d732980f98552ab09e5c50d64e"

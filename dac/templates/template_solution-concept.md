@@ -28,4 +28,3 @@ author: "Author Name"
 ## Tradeoffs
 
 ## Open Questions
-

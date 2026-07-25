@@ -35,4 +35,3 @@ Pros and cons.
 # Consequences
 
 Describe the resulting tradeoffs and follow-up work.
-

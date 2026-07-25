@@ -65,4 +65,3 @@ guidance in `template_meeting-notes.md`.
 The `front-matter/` subfolder contains reusable YAML stubs.
 Use them when you want to start from a smaller fragment rather than a full
 template file.
-

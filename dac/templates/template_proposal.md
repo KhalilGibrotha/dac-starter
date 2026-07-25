@@ -34,4 +34,3 @@ This proposal evaluates [change] for review and decision.
 ## Risks
 
 ## Recommendation
-

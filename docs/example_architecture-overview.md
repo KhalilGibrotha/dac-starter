@@ -27,4 +27,3 @@ flowchart LR
 ## Notes
 
 Use this file as a first smoke test for linting and DOCX rendering.
-

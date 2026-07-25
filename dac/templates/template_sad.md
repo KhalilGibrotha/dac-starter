@@ -45,4 +45,3 @@ Summarize major design choices and link ADRs where needed.
 
 - Risk or unresolved item
 - Dependency or follow-up decision
-

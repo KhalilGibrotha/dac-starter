@@ -38,4 +38,3 @@ flowchart TD
   Decision -->|yes| Apply["Apply the pattern"]
   Decision -->|no| Alternate["Use another approach"]
 ```
-

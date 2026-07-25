@@ -24,11 +24,10 @@ This procedure describes how to perform [task].
 
 ## Procedure
 
-1. 
-2. 
-3. 
+1.
+2.
+3.
 
 ## Verification
 
 ## Rollback or Exit Conditions
-

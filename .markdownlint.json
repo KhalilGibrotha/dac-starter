@@ -3,10 +3,16 @@
   "MD013": false,
   "MD024": { "siblings_only": true },
   "MD025": false,
+  "MD028": false,
+  "MD029": false,
   "MD033": {
     "allowed_elements": ["br", "sub", "sup", "details", "summary"]
   },
+  "MD036": false,
   "MD040": true,
-  "MD041": false
+  "MD041": false,
+  "MD046": { "style": "fenced" },
+  "MD049": false,
+  "MD050": false,
+  "MD060": false
 }
-

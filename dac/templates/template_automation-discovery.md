@@ -30,4 +30,3 @@ author: "Author Name"
 ## Risks and Unknowns
 
 ## Exit Criteria
-
