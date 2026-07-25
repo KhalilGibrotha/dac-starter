@@ -1,0 +1,33 @@
+# Opt-in pre-commit hooks mirroring the CI gates. Nothing runs unless an
+# author opts in once per clone:
+#
+#   pre-commit install
+#
+# The hooks call commands provided by the dac-toolkit image, so they work
+# out of the box in the Dev Spaces workspace (pre-commit and the linters are
+# baked into the image). On a machine without the toolkit, either install it
+# locally or skip hooks with `git commit --no-verify` — CI runs the same
+# gates on every pull request regardless.
+repos:
+  - repo: local
+    hooks:
+      - id: lint-frontmatter
+        name: front matter validation
+        entry: lint-frontmatter.py --path .
+        language: system
+        files: \.md$
+        pass_filenames: false
+
+      - id: lint-encoding
+        name: encoding artifacts
+        entry: lint-encoding.py --path .
+        language: system
+        files: \.md$
+        pass_filenames: false
+
+      - id: lint-mermaid
+        name: mermaid preflight
+        entry: lint-mermaid.py --path .
+        language: system
+        files: \.md$
+        pass_filenames: false
