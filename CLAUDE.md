@@ -1,33 +1,50 @@
-# Architecture Documentation Starter Guidance
+# Documentation-as-Code — Claude Instructions
 
-This repository is a public-safe architecture documentation starter.
-Markdown with YAML front matter is the authoring format. Generated DOCX output
-is a build artifact.
+This repo authors Markdown; the dac-toolkit container image lints and renders
+it. Generated DOCX in `exports/` is a build artifact — regenerate it, never
+edit it.
+
+## How This Repo Is Built
+
+- **Engine:** `ghcr.io/khalilgibrotha/dac-toolkit`. Every tool (`docx-build`,
+  `docx-build-all`, the lint scripts, Vale, markdownlint-cli2, pre-commit) is
+  an image command, available in the Dev Spaces workspace and CI. Never clone
+  the toolkit repo.
+- **`dac/` is the machinery folder:** build config, org identity, templates,
+  Vale styles. The repo root keeps only files their tools require there
+  (devfile, `.github/`, `.vscode/`, dotfiles).
+- **Content folders** (`docs/`, `decisions/`, `patterns/`, ...) are yours.
+- `dac-init` installs missing starting points; it never overwrites existing
+  files. Tune the configs freely — they are yours to own.
 
 ## Golden Rules
 
-1. Output Markdown by default.
-2. Every formal document needs YAML front matter.
-3. Never manually number headings.
-4. Every formal document should begin with a one-sentence purpose statement.
-5. Every document should have one primary type.
-6. Use the standard file naming convention: `<doc_type>_<domain>_<descriptor>.md`
-7. Keep public starter content generic and reusable.
+1. Output Markdown only. Build DOCX only when asked.
+2. Every formal document: YAML front matter, then a one-sentence purpose
+   statement directly after the title.
+3. Never manually number headings — the builder auto-numbers.
+4. One primary type per document: concept, procedure, reference, tutorial, or
+   ADR. If it mixes, split and link.
+5. File naming: `<doc_type>_<domain>_<descriptor>.md` — lowercase, hyphens
+   inside segments, underscores between them.
+6. Mermaid fences use `flowchart`, never `graph` — the lint gate rejects
+   `graph`. No space between the backticks and `mermaid`.
+7. Start new documents from `dac/templates/`.
 
 ## Document Types
 
-| Type | `doc_type` values | Typical folders |
+| Type | `doc_type` values | Home |
 |---|---|---|
-| concept | `overview`, `gap-analysis`, `sad`, `proposal`, `policy` | `docs/`, `initiatives/`, `governance/`, `decisions/` |
-| procedure | `pattern`, `checklist`, `runbook`, `rca`, `request` | `patterns/`, `governance/`, `docs/` |
-| reference | `reference`, `release-notes`, `spec`, `standard` | `references/`, `governance/`, `docs/` |
+| concept | `overview`, `gap-analysis`, `sad`, `proposal` | `docs/`, `initiatives/` |
+| procedure | `pattern`, `checklist`, `runbook` | `patterns/`, `governance/` |
+| reference | `reference`, `standard`, `spec` | `references/`, `governance/` |
 | tutorial | `guide` | `docs/` |
 | decision | `adr` | `decisions/proposed/` |
-| informational | meeting notes and early notes | `notes/`, `initiatives/` |
 
-## Required Front Matter
+Concepts explain why; procedures give steps with no embedded explanation;
+references optimize for scanning. Link between types instead of mixing them.
 
-Formal documents should normally include:
+## Front Matter
 
 ```yaml
 ---
@@ -43,28 +60,45 @@ author: "Author Name"
 ---
 ```
 
-`audience`, `related_docs`, and `revision_history` are optional but encouraged.
+`audience`, `related_docs`, `revision_history`, and `published_url` are
+optional but encouraged.
 
-## Writing Guidance
-
-- Concepts explain what something is and why it matters.
-- Procedures explain how to do something.
-- References optimize for scanning and lookup.
-- ADRs follow the ADR structure rather than the concept/procedure/reference split.
-- Keep examples generic and organization-neutral in this starter repo.
-
-## Diagrams
-
-- Use inline Mermaid when the diagram belongs to one document.
-- Use shared image assets when the same diagram is reused across documents.
-- Do not put a space between the backticks and `mermaid`.
-
-## DOCX Rendering
-
-When you do want document output:
+## Build Commands
 
 ```bash
-docx-build <file>.md --org dac/org.yaml --output exports/<file>.docx
+docx-build-all              # incremental: only documents changed since last run
+docx-build-all --dry-run    # show what would build
+docx-build-all --force      # rebuild everything
+docx-build doc.md --org dac/org.yaml --output exports/doc.docx   # one file
 ```
 
-Or use wrapper tooling from `dac-toolkit` for batch and manifest-based flows.
+## Lint Gate — run before pushing (mirrors CI one for one)
+
+| Command | CI job |
+|---|---|
+| `lint-frontmatter.py --path .` | Front matter validation |
+| `lint-mermaid.py --path .` | Mermaid preflight |
+| `lint-encoding.py --path .` | Encoding artifacts |
+| `markdownlint-cli2 "**/*.md" "!dac/vale" "!exports" "!archive"` | Markdown lint |
+| `vale docs/ decisions/ patterns/ references/` | Vale (advisory) |
+
+If a CI job is added or removed, update this table in the same commit — a
+local gate that is a subset of CI produces green local runs and red PRs.
+
+## Writing Quality
+
+Vale includes the `ai-tells` style (AI-prose detection, advisory). It catches
+vocabulary tells; you own structure:
+
+- Vary sentence and paragraph length; let some be short.
+- Prefer "is" over "serves as / represents"; cut filler transitions ("it's
+  worth noting", "importantly") and marker words (delve, leverage, seamless).
+- No "it's not X, it's Y" as a crutch; at most one rule-of-three in a row.
+- Em dashes sparingly. Don't open every bullet with a bolded phrase.
+- Advisory means judgment: a flagged construct that carries real meaning
+  ("rollback is a promotion, not a rebuild") stays.
+
+## In This Starter Repo Itself
+
+Keep all examples generic — no organization names, hostnames, or identities.
+Teams add their own in `dac/org.yaml`, which is never committed here.
