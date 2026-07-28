@@ -90,15 +90,40 @@ root. See [dac/README.md](dac/README.md) for what each file does.
 
    Your styled Word document lands in `exports/`.
 
+6. Record which engine revision you started from, once:
+
+   ```bash
+   dac-init
+   ```
+
+   Your files are already in place, so this installs nothing. What it does
+   is write `dac/.dac-manifest.json`, the provenance record that `dac-update`
+   reads when you later pull in a newer engine revision. Skip it and
+   `dac-update` has no baseline to compare against and will refuse to run.
+
 ## Quick Start: Existing Repository
 
-Copy these into your repo, then follow steps 2–5 above:
+Run `dac-init` from your repository root and it installs the managed set for
+you:
 
-- `devfile.yaml`, `.vale.ini`, `.markdownlint.json`, `.pre-commit-config.yaml`
-- `.github/workflows/lint.yml`
-- the whole `dac/` folder
-- the content folders you plan to use (or point `dac/docx-build.yml` `scan:`
-  at the folders you already have)
+```bash
+podman run --rm -v "$PWD:/work:Z" -w /work \
+  ghcr.io/khalilgibrotha/dac-toolkit:latest dac-init
+```
+
+It never overwrites a file you already have, so your existing `.vale.ini` or
+`.markdownlint.json` survives untouched; add `--dry-run` first to see exactly
+what it would place. It also writes the `dac/.dac-manifest.json` provenance
+record that `dac-update` needs later. Then follow steps 2, 4, and 5 above.
+
+To place the files by hand instead, copy: `devfile.yaml`, `.vale.ini`,
+`.markdownlint.json`, `.pre-commit-config.yaml`, `.github/workflows/lint.yml`,
+the whole `dac/` folder, and the content folders you plan to use (or point
+`dac/docx-build.yml` `scan:` at folders you already have).
+
+Point `scan:` in `dac/docx-build.yml` at the folders that actually exist in
+your repo. The shipped list assumes the full starter layout, and any missing
+folder produces a `scan path not found` warning on every build.
 
 Nothing else is required — the tools come from the image.
 
