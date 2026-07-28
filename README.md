@@ -76,7 +76,16 @@ root. See [dac/README.md](dac/README.md) for what each file does.
    Then prefix each command with `dac` — for example `dac docx-build-all`.
    Without the function, write the full `podman run ...` line every time.
 
-   On Windows Git Bash the mount path needs protecting, so use:
+   **Windows PowerShell** parses a bare `$PWD:` as a drive reference, so the
+   braces matter:
+
+   ```powershell
+   function dac { podman run --rm -v "${PWD}:/work:Z" -w /work `
+     ghcr.io/khalilgibrotha/dac-toolkit:latest @args }
+   ```
+
+   **Windows Git Bash** rewrites container paths unless you disable that, so
+   use:
 
    ```bash
    dac() { MSYS_NO_PATHCONV=1 podman run --rm \
@@ -103,6 +112,11 @@ root. See [dac/README.md](dac/README.md) for what each file does.
    ```
 
    Your styled Word document lands in `exports/`.
+
+   Builds are incremental, and the trigger is the document's `version:`
+   field rather than its text. Edit a document and rebuild and it reports
+   `Skipped: 1 (up to date)` — bump `version:` to publish the change, or
+   pass `--force` to re-render everything regardless.
 
 6. Record which engine revision you started from, once:
 
