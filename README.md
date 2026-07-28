@@ -60,32 +60,46 @@ root. See [dac/README.md](dac/README.md) for what each file does.
    branding until this file exists — the template ships only the example, so
    covers fall back to plain text without it. Add a logo as `dac/logo.png`
    if you have one; it is picked up automatically.
-3. Choose where the tools run. Both give you the same toolkit image:
+3. Choose where the tools run. Both give you the same toolkit image, and
+   every toolkit command in this guide is written as `<command>`.
 
    **Locally with podman or docker** — nothing to install beyond the
-   container runtime:
+   container runtime. The tools live in the image, so each command runs in a
+   throwaway container. Define this shell function once per session and the
+   rest of this guide works as written:
 
    ```bash
-   podman run --rm -v "$PWD:/work:Z" -w /work \
-     ghcr.io/khalilgibrotha/dac-toolkit:latest docx-build-all
+   dac() { podman run --rm -v "$PWD:/work:Z" -w /work \
+     ghcr.io/khalilgibrotha/dac-toolkit:latest "$@"; }
    ```
 
-   On Windows Git Bash, prefix the command with `MSYS_NO_PATHCONV=1` and
-   write the mount as `-v "C:\path\to\repo://work:z" -w //work`.
-   Without that, the path is rewritten and the run fails. If podman appears
-   to hang or refuses to connect, start its VM first: `podman machine start`.
+   Then prefix each command with `dac` — for example `dac docx-build-all`.
+   Without the function, write the full `podman run ...` line every time.
+
+   On Windows Git Bash the mount path needs protecting, so use:
+
+   ```bash
+   dac() { MSYS_NO_PATHCONV=1 podman run --rm \
+     -v "$(pwd -W)://work:z" -w //work \
+     ghcr.io/khalilgibrotha/dac-toolkit:latest "$@"; }
+   ```
+
+   If podman appears to hang or refuses to connect, start its VM first:
+   `podman machine start`.
 
    **In OpenShift Dev Spaces** — if your organization runs it, paste the
    repo's Git URL into **Import from Git** on your Dev Spaces dashboard (ask
    your platform team for the URL). `devfile.yaml` starts the workspace on
-   the same image with every tool ready.
+   the same image with every tool already on your PATH, so commands run
+   bare, with no `dac` prefix.
 4. Copy a template from `dac/templates/` into `docs/`, fill in the front
    matter, and write.
-5. Build. In Dev Spaces: **Terminal → Run Task → "Build changed documents"**.
-   Anywhere the toolkit is on your PATH:
+5. Build. In Dev Spaces: **Terminal → Run Task → "Build changed documents"**,
+   or run the command directly:
 
    ```bash
-   docx-build-all
+   docx-build-all          # Dev Spaces, or any host with the toolkit installed
+   dac docx-build-all      # local container, using the function from step 3
    ```
 
    Your styled Word document lands in `exports/`.
@@ -93,7 +107,8 @@ root. See [dac/README.md](dac/README.md) for what each file does.
 6. Record which engine revision you started from, once:
 
    ```bash
-   dac-init
+   dac-init                # Dev Spaces
+   dac dac-init            # local container
    ```
 
    Your files are already in place, so this installs nothing. What it does
@@ -103,18 +118,20 @@ root. See [dac/README.md](dac/README.md) for what each file does.
 
 ## Quick Start: Existing Repository
 
-Run `dac-init` from your repository root and it installs the managed set for
-you:
+First pick where the tools run — step 3 above covers both options and defines
+the `dac` shell function local users need. Then run `dac-init` from your
+repository root and it installs the managed set for you:
 
 ```bash
-podman run --rm -v "$PWD:/work:Z" -w /work \
-  ghcr.io/khalilgibrotha/dac-toolkit:latest dac-init
+dac-init                # Dev Spaces
+dac dac-init            # local container
 ```
 
 It never overwrites a file you already have, so your existing `.vale.ini` or
 `.markdownlint.json` survives untouched; add `--dry-run` first to see exactly
 what it would place. It also writes the `dac/.dac-manifest.json` provenance
-record that `dac-update` needs later. Then follow steps 2, 4, and 5 above.
+record that `dac-update` needs later. Then follow steps 2, 4, and 5 above,
+using the same prefix your environment needs.
 
 To place the files by hand instead, copy: `devfile.yaml`, `.vale.ini`,
 `.markdownlint.json`, `.pre-commit-config.yaml`, `.github/workflows/lint.yml`,

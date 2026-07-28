@@ -10,7 +10,7 @@
 # to a document library updates files in place.
 export_root: exports/
 org: dac/org.yaml
-# logo: dac/logo.png            # uncomment after adding your logo
+# logo: dac/logo.png            # only needed if your logo lives elsewhere
 layout: mirror
 
 scan:
