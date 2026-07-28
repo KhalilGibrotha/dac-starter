@@ -45,16 +45,44 @@ root. See [dac/README.md](dac/README.md) for what each file does.
 
 ## Quick Start: New Repository
 
-1. Click **Use this template** on GitHub (or clone and re-init).
+1. Create your repository from this template: open
+   <https://github.com/KhalilGibrotha/dac-starter> and click **Use this
+   template → Create a new repository**. To work from a clone instead:
+
+   ```bash
+   git clone https://github.com/KhalilGibrotha/dac-starter.git my-docs
+   cd my-docs
+   rm -rf .git && git init
+   ```
+
 2. Copy `dac/org.yaml.example` to `dac/org.yaml` and fill in your
-   organization's name, department, and address. Add a logo as
-   `dac/logo.png` and uncomment the `logo:` line in `dac/docx-build.yml`.
-3. Open the repo in OpenShift Dev Spaces: paste the repo's Git URL into
-   **Import from Git**. The workspace starts on the toolkit image with every
-   tool ready.
+   organization's name, department, and address. Nothing renders with your
+   branding until this file exists — the template ships only the example, so
+   covers fall back to plain text without it. Add a logo as `dac/logo.png`
+   if you have one; it is picked up automatically.
+3. Choose where the tools run. Both give you the same toolkit image:
+
+   **Locally with podman or docker** — nothing to install beyond the
+   container runtime:
+
+   ```bash
+   podman run --rm -v "$PWD:/work:Z" -w /work \
+     ghcr.io/khalilgibrotha/dac-toolkit:latest docx-build-all
+   ```
+
+   On Windows Git Bash, prefix the command with `MSYS_NO_PATHCONV=1` and
+   write the mount as `-v "C:\path\to\repo://work:z" -w //work`.
+   Without that, the path is rewritten and the run fails. If podman appears
+   to hang or refuses to connect, start its VM first: `podman machine start`.
+
+   **In OpenShift Dev Spaces** — if your organization runs it, paste the
+   repo's Git URL into **Import from Git** on your Dev Spaces dashboard (ask
+   your platform team for the URL). `devfile.yaml` starts the workspace on
+   the same image with every tool ready.
 4. Copy a template from `dac/templates/` into `docs/`, fill in the front
    matter, and write.
-5. Build: **Terminal → Run Task → "Build changed documents"**, or:
+5. Build. In Dev Spaces: **Terminal → Run Task → "Build changed documents"**.
+   Anywhere the toolkit is on your PATH:
 
    ```bash
    docx-build-all
