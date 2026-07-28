@@ -7,7 +7,7 @@ the repo root stays clean for authors. Nothing in this folder is rendered.
 |---|---|
 | `docx-build.yml` | Batch render config for `docx-build-all`. Paths inside are relative to the repo root |
 | `org.yaml` | Organization identity for cover pages. Copy `org.yaml.example` and fill in your own |
-| `logo.png` *(you add)* | Cover-page logo; enable the `logo:` key in `docx-build.yml` |
+| `logo.png` *(you add)* | Cover-page logo; picked up automatically at this path |
 | `templates/` | Document templates — copy one to start a new document |
 | `vale/styles/` | Prose lint styles and the vocabulary accept list. Synced packages land here and are gitignored |
 | `render-manifest.yaml` | Optional explicit render manifest for `docx_manifest.py`. The `docx-build.yml` autodetect flow is the default; use the manifest when you need per-document control |

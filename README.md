@@ -45,32 +45,102 @@ root. See [dac/README.md](dac/README.md) for what each file does.
 
 ## Quick Start: New Repository
 
-1. Click **Use this template** on GitHub (or clone and re-init).
-2. Copy `dac/org.yaml.example` to `dac/org.yaml` and fill in your
-   organization's name, department, and address. Add a logo as
-   `dac/logo.png` and uncomment the `logo:` line in `dac/docx-build.yml`.
-3. Open the repo in OpenShift Dev Spaces: paste the repo's Git URL into
-   **Import from Git**. The workspace starts on the toolkit image with every
-   tool ready.
-4. Copy a template from `dac/templates/` into `docs/`, fill in the front
-   matter, and write.
-5. Build: **Terminal → Run Task → "Build changed documents"**, or:
+1. Create your repository from this template: open
+   <https://github.com/KhalilGibrotha/dac-starter> and click **Use this
+   template → Create a new repository**. To work from a clone instead:
 
    ```bash
-   docx-build-all
+   git clone https://github.com/KhalilGibrotha/dac-starter.git my-docs
+   cd my-docs
+   rm -rf .git && git init
+   ```
+
+2. Copy `dac/org.yaml.example` to `dac/org.yaml` and fill in your
+   organization's name, department, and address. Nothing renders with your
+   branding until this file exists — the template ships only the example, so
+   covers fall back to plain text without it. Add a logo as `dac/logo.png`
+   if you have one; it is picked up automatically.
+3. Choose where the tools run. Both give you the same toolkit image, and
+   every toolkit command in this guide is written as `<command>`.
+
+   **Locally with podman or docker** — nothing to install beyond the
+   container runtime. The tools live in the image, so each command runs in a
+   throwaway container. Define this shell function once per session and the
+   rest of this guide works as written:
+
+   ```bash
+   dac() { podman run --rm -v "$PWD:/work:Z" -w /work \
+     ghcr.io/khalilgibrotha/dac-toolkit:latest "$@"; }
+   ```
+
+   Then prefix each command with `dac` — for example `dac docx-build-all`.
+   Without the function, write the full `podman run ...` line every time.
+
+   On Windows Git Bash the mount path needs protecting, so use:
+
+   ```bash
+   dac() { MSYS_NO_PATHCONV=1 podman run --rm \
+     -v "$(pwd -W)://work:z" -w //work \
+     ghcr.io/khalilgibrotha/dac-toolkit:latest "$@"; }
+   ```
+
+   If podman appears to hang or refuses to connect, start its VM first:
+   `podman machine start`.
+
+   **In OpenShift Dev Spaces** — if your organization runs it, paste the
+   repo's Git URL into **Import from Git** on your Dev Spaces dashboard (ask
+   your platform team for the URL). `devfile.yaml` starts the workspace on
+   the same image with every tool already on your PATH, so commands run
+   bare, with no `dac` prefix.
+4. Copy a template from `dac/templates/` into `docs/`, fill in the front
+   matter, and write.
+5. Build. In Dev Spaces: **Terminal → Run Task → "Build changed documents"**,
+   or run the command directly:
+
+   ```bash
+   docx-build-all          # Dev Spaces, or any host with the toolkit installed
+   dac docx-build-all      # local container, using the function from step 3
    ```
 
    Your styled Word document lands in `exports/`.
 
+6. Record which engine revision you started from, once:
+
+   ```bash
+   dac-init                # Dev Spaces
+   dac dac-init            # local container
+   ```
+
+   Your files are already in place, so this installs nothing. What it does
+   is write `dac/.dac-manifest.json`, the provenance record that `dac-update`
+   reads when you later pull in a newer engine revision. Skip it and
+   `dac-update` has no baseline to compare against and will refuse to run.
+
 ## Quick Start: Existing Repository
 
-Copy these into your repo, then follow steps 2–5 above:
+First pick where the tools run — step 3 above covers both options and defines
+the `dac` shell function local users need. Then run `dac-init` from your
+repository root and it installs the managed set for you:
 
-- `devfile.yaml`, `.vale.ini`, `.markdownlint.json`, `.pre-commit-config.yaml`
-- `.github/workflows/lint.yml`
-- the whole `dac/` folder
-- the content folders you plan to use (or point `dac/docx-build.yml` `scan:`
-  at the folders you already have)
+```bash
+dac-init                # Dev Spaces
+dac dac-init            # local container
+```
+
+It never overwrites a file you already have, so your existing `.vale.ini` or
+`.markdownlint.json` survives untouched; add `--dry-run` first to see exactly
+what it would place. It also writes the `dac/.dac-manifest.json` provenance
+record that `dac-update` needs later. Then follow steps 2, 4, and 5 above,
+using the same prefix your environment needs.
+
+To place the files by hand instead, copy: `devfile.yaml`, `.vale.ini`,
+`.markdownlint.json`, `.pre-commit-config.yaml`, `.github/workflows/lint.yml`,
+the whole `dac/` folder, and the content folders you plan to use (or point
+`dac/docx-build.yml` `scan:` at folders you already have).
+
+Point `scan:` in `dac/docx-build.yml` at the folders that actually exist in
+your repo. The shipped list assumes the full starter layout, and any missing
+folder produces a `scan path not found` warning on every build.
 
 Nothing else is required — the tools come from the image.
 
