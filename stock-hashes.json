@@ -143,6 +143,12 @@
   "dac/vale/styles/Vocab/ArchitectureDocs/reject.txt": [
     "sha256:01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
   ],
+  "dac/vale/styles/config/vocabularies/ArchitectureDocs/accept.txt": [
+    "sha256:01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+  ],
+  "dac/vale/styles/config/vocabularies/ArchitectureDocs/reject.txt": [
+    "sha256:01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+  ],
   "devfile.yaml": [
     "sha256:fe888bedb776f500621ca6a94648c2c1e4f17f381b5fee6a893dd7d23d776714"
   ]
