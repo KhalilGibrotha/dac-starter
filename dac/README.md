@@ -23,7 +23,7 @@ dac/vale/styles/
 |   `-- vocabularies/
 |       `-- ArchitectureDocs/      committed - your terms live here
 |           |-- accept.txt         words Vale should stop flagging
-|           `-- reject.txt         words Vale should always flag
+|           `-- reject.txt         only enforced if you enable Vale.Terms
 |-- RedHat/                        gitignored - vale sync regenerates
 |-- write-good/                    gitignored - vale sync regenerates
 `-- ai-tells/                      gitignored - vale sync regenerates
@@ -34,7 +34,7 @@ dac/vale/styles/
 it. The folder name must match `Vocab =` in `.vale.ini`; rename both together
 if you want a different one.
 
-> **Do not create `dac/vale/styles/Vocab/`.** Vale 2 read vocabularies from
+> **Do not create `dac/vale/styles/Vocab/`.** Vale 2 reads vocabularies from
 > there and Vale 3 does not. Words placed in that folder are ignored with no
 > error, so the file looks maintained while doing nothing, and a repo holding
 > both copies drifts apart quietly.
