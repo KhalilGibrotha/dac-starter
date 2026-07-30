@@ -10,6 +10,9 @@ build/
 .pytest_cache/
 .mypy_cache/
 .ruff_cache/
+# Hook environments, parked on the Dev Spaces persistent volume by
+# PRE_COMMIT_HOME in devfile.yaml so they survive workspace restarts.
+.pre-commit-cache/
 
 # Virtual environments
 .venv/

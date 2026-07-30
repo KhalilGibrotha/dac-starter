@@ -101,6 +101,21 @@ root. See [dac/README.md](dac/README.md) for what each file does.
    your platform team for the URL). `devfile.yaml` starts the workspace on
    the same image with every tool already on your PATH, so commands run
    bare, with no `dac` prefix.
+
+   On a **new workspace**, warm the commit hooks once before you start
+   working:
+
+   ```bash
+   pre-commit install-hooks
+   ```
+
+   This builds the hook environments — a few minutes, and the heaviest thing
+   the workspace will do. `devfile.yaml` puts that cache on the persistent
+   volume, so it happens once rather than after every restart. Skipping this
+   step does not break anything; it just moves the cost onto your first
+   commit, where a memory-capped workspace may drop the connection instead.
+   If a commit ever has to go through while the workspace is struggling,
+   `git commit --no-verify` bypasses the hooks and CI still gates the branch.
 4. Copy a template from `dac/templates/` into `docs/`, fill in the front
    matter, and write.
 5. Build. In Dev Spaces: **Terminal → Run Task → "Build changed documents"**,

@@ -19,11 +19,31 @@ components:
       # this in earnest; :latest is fine while iterating.
       image: ghcr.io/khalilgibrotha/dac-toolkit:latest
       memoryRequest: 1Gi
-      memoryLimit: 6Gi
+      # Set this to what your namespace actually grants. Claiming more than
+      # the quota allows buys no headroom - the workspace is still killed at
+      # the real ceiling, just with a devfile that says otherwise.
+      memoryLimit: 4Gi
       cpuRequest: 500m
       cpuLimit: "2"
       mountSources: true
       sourceMapping: /projects
+      env:
+        # Two settings that keep commits from killing the workspace. Both were
+        # found the hard way; neither is optional in a memory-capped cluster.
+        #
+        # Node sizes its heap from the HOST node's RAM, not this container's
+        # limit, so markdownlint-cli2 running as a pre-commit hook will grow
+        # past memoryLimit and get the workspace OOM-killed. Capping it makes
+        # an oversized run fail with a readable error instead.
+        - name: NODE_OPTIONS
+          value: "--max-old-space-size=768"
+        # pre-commit caches hook environments under $HOME, which is ephemeral
+        # here - only sourceMapping (/projects) is on the persistent volume.
+        # Left at the default, every workspace restart re-runs npm install for
+        # the hook environments on your next commit, which is the single most
+        # reliable way to exhaust a 4Gi workspace. On the PVC it installs once.
+        - name: PRE_COMMIT_HOME
+          value: /projects/.pre-commit-cache
 
 commands:
   - id: build-changed
