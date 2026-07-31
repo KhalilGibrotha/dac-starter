@@ -1,0 +1,19 @@
+# Line endings for anything that executes inside the Linux container or as a
+# git hook. CRLF is invisible on Windows and fatal there — bash reads the CR
+# as part of the last token on every line, so a script silently takes the
+# wrong branch and reports success.
+#
+# An attribute cannot rescue a file git has already classified as binary. If a
+# script misbehaves, run `git ls-files --eol <path>`: `i/-text` means the rule
+# was skipped, usually because a raw control byte is embedded in the source.
+# Remove the byte first, then `git add --renormalize`.
+*.sh        text eol=lf
+*.py        text eol=lf
+*.yml       text eol=lf
+*.yaml      text eol=lf
+.githooks/* text eol=lf
+
+# Prose-friendly diffs: git's built-in markdown driver puts the enclosing
+# heading in hunk headers instead of a random nearby line.
+*.md   diff=markdown
+*.qmd  diff=markdown
