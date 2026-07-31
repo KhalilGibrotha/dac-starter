@@ -72,6 +72,34 @@ docx-build-all --force      # rebuild everything
 docx-build doc.md --org dac/org.yaml --output exports/doc.docx   # one file
 ```
 
+## Where the Toolchain Runs
+
+Three environments, one published image, so local results match CI:
+
+| Where | How |
+|---|---|
+| Visual Studio Code, locally | **Reopen in Container** — `.devcontainer/devcontainer.json` |
+| OpenShift Dev Spaces | `devfile.yaml`, imported from the repo URL |
+| Terminal, locally | `podman run --rm -v "${PWD}:/work:Z" -w /work <image> <cmd>` |
+
+The devcontainer and the devfile name the same image tag. Change one, change
+the other.
+
+`.devcontainer/devcontainer.json` is **not** in the toolkit's managed-file set,
+so `dac-init` does not install it into an existing repository — it arrives only
+by templating from this starter. Adding it to `MANAGED_ROOT_FILES` is a
+deliberate toolkit change, not something to do in passing.
+
+Its `postCreateCommand` works around three things, all documented with their
+symptoms in `TROUBLESHOOTING.md`: git's dubious-ownership refusal, Vale styles
+that cannot be synced onto a Windows bind mount, and pre-commit hook warm-up.
+Do not swap it for the image's `vale-bootstrap.sh` — that script has CRLF line
+endings and silently copies styles to the legacy `.vale/styles` path.
+
+Run repository work in the Linux lane — WSL or the container, not PowerShell.
+Windows shells add BOMs, CRLF endings, and lost exec bits that break where the
+files actually run.
+
 ## Lint Gate — run before pushing (mirrors CI one for one)
 
 | Command | CI job |

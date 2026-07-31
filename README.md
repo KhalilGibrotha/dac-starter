@@ -60,8 +60,8 @@ root. See [dac/README.md](dac/README.md) for what each file does.
    branding until this file exists — the template ships only the example, so
    covers fall back to plain text without it. Add a logo as `dac/logo.png`
    if you have one; it is picked up automatically.
-3. Choose where the tools run. Both give you the same toolkit image, and
-   every toolkit command in this guide is written as `<command>`.
+3. Choose where the tools run. Each option gives you the same toolkit image,
+   and every toolkit command in this guide is written as `<command>`.
 
    **Locally with podman or docker** — nothing to install beyond the
    container runtime. The tools live in the image, so each command runs in a
@@ -95,6 +95,19 @@ root. See [dac/README.md](dac/README.md) for what each file does.
 
    If podman appears to hang or refuses to connect, start its VM first:
    `podman machine start`.
+
+   **In Visual Studio Code with Dev Containers** — the same image, with the editor
+   inside it: linting as you type, and a terminal where commands run bare
+   with no `dac` prefix. Install the Dev Containers extension, open the
+   repository, and choose **Reopen in Container**;
+   `.devcontainer/devcontainer.json` handles the rest. To use podman instead
+   of Docker Desktop, set this once in your **User** settings:
+
+   ```jsonc
+   {
+     "dev.containers.dockerPath": "podman"
+   }
+   ```
 
    **In OpenShift Dev Spaces** — if your organization runs it, paste the
    repo's Git URL into **Import from Git** on your Dev Spaces dashboard (ask
@@ -145,9 +158,13 @@ root. See [dac/README.md](dac/README.md) for what each file does.
    reads when you later pull in a newer engine revision. Skip it and
    `dac-update` has no baseline to compare against and will refuse to run.
 
+Stuck? [TROUBLESHOOTING.md](TROUBLESHOOTING.md) covers the problems adopters
+actually hit — workspace disconnects during commits, gates failing on existing
+documents, builds that skip everything, missing cover logos.
+
 ## Quick Start: Existing Repository
 
-First pick where the tools run — step 3 above covers both options and defines
+First pick where the tools run — step 3 above covers every option and defines
 the `dac` shell function local users need. Then run `dac-init` from your
 repository root and it installs the managed set for you:
 
