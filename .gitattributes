@@ -13,7 +13,14 @@
 *.yaml      text eol=lf
 .githooks/* text eol=lf
 
-# Prose-friendly diffs: git's built-in markdown driver puts the enclosing
-# heading in hunk headers instead of a random nearby line.
-*.md   diff=markdown
-*.qmd  diff=markdown
+# Markdown is normalized to LF as well as getting the prose diff driver.
+# diff=markdown alone only selects a diff driver; line endings stay governed by
+# the checkout's core.autocrlf. On a Windows clone that writes every .md as
+# CRLF, which the container's git then reports as modified -- phantom changes
+# on files nobody touched, and real line-ending churn the moment one is
+# committed from inside the container.
+#
+# The built-in markdown driver puts the enclosing heading in the hunk header
+# instead of a random nearby line.
+*.md   text eol=lf diff=markdown
+*.qmd  text eol=lf diff=markdown

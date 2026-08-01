@@ -6,15 +6,21 @@ edit it.
 
 **This is a PUBLIC template repo.** Everything here is read and copied by
 adopting teams. No organization identifiers, no internal hostnames, no
-environment-specific examples — teams supply their own in `dac/org.yaml`,
-which is never committed here. A session rooted in a private repo can edit
-here, since permissions span all of `E:\dev`, so hold that line deliberately.
-Maintainers: drive cross-repo work from `E:\dev\architecture-docs`, since a tag
-here starts the release chain and the consumer end is where it is verified.
+maintainer-local paths, and no environment-specific examples — teams supply
+their own in `dac/org.yaml`, which is never committed here.
 
-On a maintainer's Windows machine the toolchain runs in the container, launched
-from **PowerShell** (Git Bash rewrites the mount path). Adopters get the same
-image three ways — see "Where the Toolchain Runs" below.
+That constraint needs holding deliberately rather than inferred from
+surroundings: an assistant session rooted in a private repo can usually edit
+here too, and will carry that repo's habits with it unless told otherwise.
+
+A tag here starts the release chain — starter tag, `STARTER_REF` bump in the
+toolkit, image rebuild, consumer adoption — so a change here is verified at the
+consumer end, not this one.
+
+Locally the toolchain runs in the container. On Windows launch it from
+**PowerShell**; Git Bash rewrites the mount path and the run fails with a
+misleading "workdir does not exist". Adopters get the same image three ways —
+see "Where the Toolchain Runs" below.
 
 ## How This Repo Is Built
 

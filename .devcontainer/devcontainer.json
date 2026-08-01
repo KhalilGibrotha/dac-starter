@@ -15,11 +15,15 @@
   "workspaceMount": "source=${localWorkspaceFolder},target=/projects/${localWorkspaceFolderBasename},type=bind",
 
   // The image runs as uid 1001 (user "default", group root) — the OpenShift
-  // arbitrary-UID convention. The bind mount is writable as that user, so
-  // leave the UID alone: letting VS Code rewrite it breaks the group-root
-  // permissions the image relies on.
+  // arbitrary-UID convention.
+  //
+  // updateRemoteUserUID is deliberately NOT disabled. On Windows and macOS it
+  // is a no-op, since those bind mounts carry no Linux ownership. On a Linux
+  // host it is what makes the container user match the checkout's owner, so
+  // turning it off leaves a normal uid-1000 checkout read-only inside the
+  // container. That failure would appear only for Linux adopters, who are the
+  // least likely to guess the cause from a setting they did not write.
   "remoteUser": "default",
-  "updateRemoteUserUID": false,
 
   // Vale style packages are gitignored, so a fresh clone has none — and a
   // plain `vale sync` cannot supply them here. Sync chmods what it

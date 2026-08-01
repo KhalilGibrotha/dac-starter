@@ -12,12 +12,17 @@ it rather than the way the tool reports it.
 through a commit, usually the first one after starting a workspace. Memory
 climbs toward the workspace limit and the session dies.
 
-**Cause.** Not the linting. `pre-commit` caches its hook environments under
-`$HOME`, and in Dev Spaces `$HOME` is ephemeral — only the source mount is on
-the persistent volume. Every workspace restart therefore re-runs `npm install`
-for the markdownlint environment on your next commit. Node makes it worse: it
-sizes its heap from the *host node's* RAM, not the container limit, so it will
-happily grow past your quota.
+**Cause.** Usually not the linting itself. `pre-commit` caches hook
+environments under `$HOME`, and in Dev Spaces `$HOME` is ephemeral — only the
+source mount is on the persistent volume. If your `.pre-commit-config.yaml`
+gains a hook backed by a downloaded runtime (an npm-based `markdownlint-cli2`
+hook is the usual one), every workspace restart re-installs it on your next
+commit. Node compounds it: it sizes its heap from the *host node's* RAM rather
+than the container limit, so it grows past the workspace quota.
+
+The hooks shipped in this starter are all `language: system` and run tools
+already baked into the image, so they install nothing. If you hit this, the
+first thing to check is whether a hook with its own runtime has been added.
 
 **Fix.** Both settings ship in `devfile.yaml`, so a workspace started from the
 current file is already correct:
@@ -30,48 +35,55 @@ env:
     value: /projects/.pre-commit-cache
 ```
 
-On a workspace that predates them, export both in your shell, then warm the
-cache once, deliberately, before doing any work:
+`PRE_COMMIT_HOME` puts the cache on the persistent volume, so an install
+happens once rather than after every restart. On a workspace that predates
+these, export both and warm the cache deliberately before working:
 
 ```bash
 pre-commit install-hooks
 ```
-
-That is the expensive step. Let it finish. Afterwards it never repeats,
-including across restarts.
 
 **If you need a commit through immediately**, skip the hooks rather than fight
 them. CI still gates the branch:
 
 ```bash
 git commit --no-verify -m "..."
-SKIP=markdownlint-cli2 git commit -m "..."   # or skip just the heavy one
+SKIP=<hook-id> git commit -m "..."   # or skip just the expensive one
 ```
 
 **Still dying?** Commit in smaller batches, and close the Source Control panel
-while you do — an unrendered panel does not re-scan. Then check whether the
-install alone is the problem: `pre-commit install-hooks` on an otherwise idle
-workspace tells you whether you have the headroom at all.
+while you do — an unrendered panel does not re-scan. Then test the install
+alone: `pre-commit install-hooks` on an otherwise idle workspace tells you
+whether you have the headroom at all.
 
 ---
 
 ## Every document fails the gates on day one
 
-Expected, and it does not block you. `pre-commit` only inspects **staged**
-files, so existing documents are not touched until you edit them. Adoption is
-therefore incremental by default: the gates apply to what you are working on,
-not to everything you have ever written.
+Expected on an existing corpus, and worth understanding before you fight it.
 
-Treat the backlog as a runway rather than a wall:
+**These hooks scan the whole repository, not just what you staged.** Every hook
+in `.pre-commit-config.yaml` sets `pass_filenames: false` and ends in
+`--path .`, so a one-line edit to one document runs the gates across
+everything. That is deliberate for a clean repo — it catches a file broken by
+something other than your edit — but it means adoption on an existing corpus is
+not incremental by default.
 
-- Fix documents as you touch them. A file you were editing anyway costs little
-  extra to bring to standard.
-- To see the whole picture without committing anything:
-  `pre-commit run --all-files`. Read it as a survey, not a to-do list.
-- Fixer-style hooks rewrite files and fail the commit so you can review. Re-add
-  and commit again — the second attempt passes.
-- If a rule genuinely does not fit your content, change the rule. The configs
-  are yours: `.markdownlint.json` for structure, `.vale.ini` for prose.
+Pick the approach that matches where you are:
+
+- **Migrating an existing corpus.** Commit with `--no-verify` while you work
+  through the backlog. CI still gates the branch, so nothing unreviewed reaches
+  the default branch. Fix by category rather than by file — one rule at a time
+  across all documents is far faster than one document at a time.
+- **Want the gates to be genuinely incremental.** Change the hooks to
+  `pass_filenames: true` and drop `--path .`, so pre-commit hands each script
+  the staged files. The configs are yours; this is a supported change, not a
+  workaround.
+- **See the whole picture first:** `pre-commit run --all-files`. Read it as a
+  survey to plan from, not a to-do list to clear in one sitting.
+- **If a rule genuinely does not fit your content, change the rule.**
+  `.markdownlint.json` for structure, `.vale.ini` for prose. A gate nobody can
+  pass gets bypassed, and then it gates nothing.
 
 ---
 

@@ -164,8 +164,9 @@ documents, builds that skip everything, missing cover logos.
 
 ## Quick Start: Existing Repository
 
-First pick where the tools run — step 3 above covers every option and defines
-the `dac` shell function local users need. Then run `dac-init` from your
+First pick where the tools run — step 3 above covers every option, including
+the `dac` shell function the local-container path needs. Dev Containers and Dev
+Spaces run commands bare, with no prefix. Then run `dac-init` from your
 repository root and it installs the managed set for you:
 
 ```bash
