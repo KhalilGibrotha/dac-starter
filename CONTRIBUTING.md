@@ -46,15 +46,23 @@ Recommended examples:
 
 ## Before Opening a Pull Request
 
-Run the local checks:
+Run the local checks. This repository has no `scripts/` directory — every
+tool comes from the toolkit image, so commands run bare in Dev Spaces or a
+Dev Container, or through the `dac` shell function defined in the README
+under "Where the Toolchain Runs":
 
 ```bash
-python3 scripts/lint-frontmatter.py --path .
-python3 scripts/lint-mermaid.py --path .
-python3 scripts/lint-prose.py --no-exit
-markdownlint .
-make docx-validate
+lint-frontmatter.py --path .
+lint-mermaid.py --path .
+lint-encoding.py --path .
+markdownlint-cli2 "**/*.md" "!dac/vale" "!exports" "!archive"
+vale docs/ decisions/ governance/ initiatives/ patterns/ references/
+docx-build-all --dry-run
 ```
+
+These are the same commands CI runs, so passing locally means passing on the
+pull request. Vale is advisory — read its findings, act on the ones that
+improve the document.
 
 ## Pull Requests
 
@@ -62,11 +70,12 @@ make docx-validate
 2. Call out any starter-template taxonomy changes explicitly.
 3. Note whether the change should also be mirrored into downstream content
    repositories.
-4. Reference the Jira ticket or work item in the PR description.
+4. Reference the work item in the PR description, if your team tracks work
+   in a ticketing system.
 
 ## Suggested Commit Style
 
-Use the Jira key at the front of the commit subject:
+If your team uses a tracker, put its key at the front of the commit subject:
 
 ```text
 ARCH-1234 Add manifest-driven content repo entrypoints
