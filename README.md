@@ -194,8 +194,9 @@ This prepares the hook environments. `devfile.yaml` keeps the cache on the
 persistent volume, so it happens once rather than after every restart.
 Skipping it does not break anything; it just moves the cost onto your first
 commit. If a commit ever has to go through while the workspace is
-struggling, `git commit --no-verify` bypasses the hooks — CI still gates the
-branch.
+struggling, `git commit --no-verify` bypasses the hooks — CI still runs the
+same gates on the pull request, and with branch protection configured they
+block the merge there.
 
 ---
 
@@ -237,8 +238,9 @@ The working loop is ordinary GitHub flow, with the gates doing the policing:
 5. **Merge when the checks pass.** The blocking gates are the merge bar;
    Vale is advice, not a bar.
 
-The same gates run in all three places — editor (as you type), pre-commit
-hook, and CI — all from the same image:
+The content gates run in all three places — editor (as you type), pre-commit
+hook, and CI — all from the same image. The secret scan is the one exception:
+it runs in CI only, since it scans history rather than a working tree.
 
 | Gate | What it catches | Blocks the merge? |
 |---|---|---|

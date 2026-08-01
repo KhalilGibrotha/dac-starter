@@ -56,13 +56,16 @@ lint-frontmatter.py --path .
 lint-mermaid.py --path .
 lint-encoding.py --path .
 markdownlint-cli2 "**/*.md" "!dac/vale" "!exports" "!archive"
-vale docs/ decisions/ governance/ initiatives/ patterns/ references/
+vale sync && vale docs/ decisions/ governance/ initiatives/ patterns/ references/
 docx-build-all --dry-run
 ```
 
-These are the same commands CI runs, so passing locally means passing on the
-pull request. Vale is advisory — read its findings, act on the ones that
-improve the document.
+These are the same commands CI runs. The first four are the blocking gates —
+clean here means clean on the pull request. Vale is advisory in CI and needs
+`vale sync` once per fresh clone or workspace, because the downloaded style
+packages are gitignored; without it Vale fails outright rather than
+reporting findings. Read its findings and act on the ones that improve the
+document — a locally "failing" Vale run does not block the merge.
 
 ## Pull Requests
 
