@@ -83,6 +83,14 @@ ARCH-1288 Update guide template wording
 ARCH-1402 Fix Mermaid lint examples
 ```
 
+**Why key-first matters if your team uses Jira:** the GitHub-Jira
+integration associates work automatically by matching the issue key. A
+branch whose name **starts with the key** (`ARCH-1234-short-description`)
+is linked to the issue, and its pull request and commits follow — no manual
+linking. The key must lead; a key buried mid-name is not reliably matched.
+Teams without Jira lose nothing by keeping the convention, and gain the
+linkage for free if they adopt it later.
+
 ## Code of Conduct
 
 This project follows the [Code of Conduct](CODE_OF_CONDUCT.md).

@@ -242,18 +242,25 @@ hook, and CI — all from the same image:
 
 | Gate | What it catches | Blocks the merge? |
 |---|---|---|
+| Secret scan (gitleaks) | Tokens, keys, credentials — anywhere in history | Yes |
 | Front matter validation | Missing or invalid YAML metadata | Yes |
 | Markdown lint | Structural Markdown problems | Yes |
 | Mermaid preflight | Diagram syntax the renderer would reject (`flowchart`, not `graph`) | Yes |
 | Encoding artifacts | Smart quotes, no-break spaces, mojibake | Yes |
 | Vale | House prose style, plus AI-prose tells (`ai-tells`) | No — advisory |
 
+Each CI job writes its result to the run's summary page — open the workflow
+run and the summary reads as a report: files checked, findings counted,
+secrets scanned. The secret scan runs on the runner rather than in the
+toolkit image (gitleaks is not part of the image) and scans the full history,
+not just the diff.
+
 Advisory means judgment: read Vale's findings in the job log and act on the
 ones that improve the document. A flagged construct that carries real
 meaning stays.
 
 **Recommended once your team is on board:** protect your base branch and
-mark the four blocking gates as required status checks
+mark the five blocking gates as required status checks
 (**Settings → Branches → Branch protection**). That turns "merge when the
 checks pass" from a habit into a guarantee, and it is what makes auto-merge
 safe to enable if your team wants it. Keep Vale off the required list — that
