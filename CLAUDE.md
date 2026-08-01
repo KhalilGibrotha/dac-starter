@@ -9,6 +9,8 @@ adopting teams. No organization identifiers, no internal hostnames, no
 environment-specific examples — teams supply their own in `dac/org.yaml`,
 which is never committed here. A session rooted in a private repo can edit
 here, since permissions span all of `E:\dev`, so hold that line deliberately.
+Maintainers: drive cross-repo work from `E:\dev\architecture-docs`, since a tag
+here starts the release chain and the consumer end is where it is verified.
 
 On a maintainer's Windows machine the toolchain runs in the container, launched
 from **PowerShell** (Git Bash rewrites the mount path). Adopters get the same

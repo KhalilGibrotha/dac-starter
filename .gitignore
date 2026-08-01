@@ -38,6 +38,10 @@ dac/vale/styles/ai-tells/
 diagrams/exported/*.png
 diagrams/exported/*.svg
 
+# Local Claude Code session config. Machine-specific absolute paths, and this
+# is a public template repo - an adopter cloning it must not inherit them.
+.claude/
+
 # OS
 .DS_Store
 Thumbs.db
