@@ -4,6 +4,24 @@ This repo authors Markdown; the dac-toolkit container image lints and renders
 it. Generated DOCX in `exports/` is a build artifact — regenerate it, never
 edit it.
 
+**This is a PUBLIC template repo.** Everything here is read and copied by
+adopting teams. No organization identifiers, no internal hostnames, no
+maintainer-local paths, and no environment-specific examples — teams supply
+their own in `dac/org.yaml`, which is never committed here.
+
+That constraint needs holding deliberately rather than inferred from
+surroundings: an assistant session rooted in a private repo can usually edit
+here too, and will carry that repo's habits with it unless told otherwise.
+
+A tag here starts the release chain — starter tag, `STARTER_REF` bump in the
+toolkit, image rebuild, consumer adoption — so a change here is verified at the
+consumer end, not this one.
+
+Locally the toolchain runs in the container. On Windows launch it from
+**PowerShell**; Git Bash rewrites the mount path and the run fails with a
+misleading "workdir does not exist". Adopters get the same image three ways —
+see "Where the Toolchain Runs" below.
+
 ## How This Repo Is Built
 
 - **Engine:** `ghcr.io/khalilgibrotha/dac-toolkit`. Every tool (`docx-build`,
@@ -71,6 +89,34 @@ docx-build-all --dry-run    # show what would build
 docx-build-all --force      # rebuild everything
 docx-build doc.md --org dac/org.yaml --output exports/doc.docx   # one file
 ```
+
+## Where the Toolchain Runs
+
+Three environments, one published image, so local results match CI:
+
+| Where | How |
+|---|---|
+| Visual Studio Code, locally | **Reopen in Container** — `.devcontainer/devcontainer.json` |
+| OpenShift Dev Spaces | `devfile.yaml`, imported from the repo URL |
+| Terminal, locally | `podman run --rm -v "${PWD}:/work:Z" -w /work <image> <cmd>` |
+
+The devcontainer and the devfile name the same image tag. Change one, change
+the other.
+
+`.devcontainer/devcontainer.json` is **not** in the toolkit's managed-file set,
+so `dac-init` does not install it into an existing repository — it arrives only
+by templating from this starter. Adding it to `MANAGED_ROOT_FILES` is a
+deliberate toolkit change, not something to do in passing.
+
+Its `postCreateCommand` works around three things, all documented with their
+symptoms in `TROUBLESHOOTING.md`: git's dubious-ownership refusal, Vale styles
+that cannot be synced onto a Windows bind mount, and pre-commit hook warm-up.
+Do not swap it for the image's `vale-bootstrap.sh` — that script has CRLF line
+endings and silently copies styles to the legacy `.vale/styles` path.
+
+Run repository work in the Linux lane — WSL or the container, not PowerShell.
+Windows shells add BOMs, CRLF endings, and lost exec bits that break where the
+files actually run.
 
 ## Lint Gate — run before pushing (mirrors CI one for one)
 

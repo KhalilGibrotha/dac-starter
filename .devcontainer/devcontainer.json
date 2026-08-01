@@ -1,0 +1,73 @@
+{
+  // Local IDE counterpart to devfile.yaml. Dev Spaces reads the devfile, VS
+  // Code reads this file, and both start the same published toolkit image —
+  // so a document that lints and builds in one behaves the same in the other.
+  //
+  // Keep the image tag in step with devfile.yaml; they are one contract.
+  // Nothing is built or installed here: the toolchain is the image.
+  "name": "DaC Content",
+  "image": "ghcr.io/khalilgibrotha/dac-toolkit:latest",
+
+  // Mirror the Dev Spaces layout (/projects/<repo>) so paths, scripts, and
+  // habits carry between environments. The basename variable means this file
+  // needs no editing after you rename or fork the repository.
+  "workspaceFolder": "/projects/${localWorkspaceFolderBasename}",
+  "workspaceMount": "source=${localWorkspaceFolder},target=/projects/${localWorkspaceFolderBasename},type=bind",
+
+  // The image runs as uid 1001 (user "default", group root) — the OpenShift
+  // arbitrary-UID convention.
+  //
+  // updateRemoteUserUID is deliberately NOT disabled. On Windows and macOS it
+  // is a no-op, since those bind mounts carry no Linux ownership. On a Linux
+  // host it is what makes the container user match the checkout's owner, so
+  // turning it off leaves a normal uid-1000 checkout read-only inside the
+  // container. That failure would appear only for Linux adopters, who are the
+  // least likely to guess the cause from a setting they did not write.
+  "remoteUser": "default",
+
+  // Vale style packages are gitignored, so a fresh clone has none — and a
+  // plain `vale sync` cannot supply them here. Sync chmods what it
+  // downloads, chmod is not permitted on a Windows-backed bind mount, and it
+  // dies partway. What is left fails hard rather than degrading: Vale exits
+  // with "style 'ai-tells' does not exist on StylesPath" and lints nothing.
+  //
+  // So sync into the container filesystem, where chmod is allowed, using a
+  // throwaway copy of .vale.ini with StylesPath redirected, then plain-copy
+  // the result onto the mount. This reads whatever Packages .vale.ini
+  // declares, so it stays correct when you add or re-pin one — no versions
+  // duplicated here. /opt/vale-styles is the image's pre-baked RedHat and
+  // write-good, kept as an offline fallback; `cp -rn` never clobbers, so it
+  // only fills gaps.
+  //
+  // Deliberately not the image's vale-bootstrap.sh: it resolves StylesPath
+  // from .vale.ini but ships with CRLF endings, so it silently falls back to
+  // the legacy .vale/styles path and leaves styles where Vale will not look.
+  //
+  // The safe.directory line comes first because everything after it needs
+  // git: the workspace is owned by your host user but the container runs as
+  // uid 1001, so git refuses it as "dubious ownership" and pre-commit fails
+  // with a confusing "is git installed?" error.
+  //
+  // Warming the pre-commit hook environments moves that cost off your first
+  // commit rather than paying it when you are trying to save work. Every
+  // step is best-effort: a network hiccup should not stop the container
+  // coming up, and each one is safe to re-run by hand.
+  "postCreateCommand": "git config --global --add safe.directory \"$PWD\" 2>/dev/null; mkdir -p /tmp/vs && sed 's#^StylesPath.*#StylesPath = /tmp/vs/styles#' .vale.ini > /tmp/vs/.vale.ini && vale --config /tmp/vs/.vale.ini sync >/dev/null 2>&1; cp -rn /tmp/vs/styles/. dac/vale/styles/ 2>/dev/null; cp -rn /opt/vale-styles/. dac/vale/styles/ 2>/dev/null; pre-commit install-hooks || true; true",
+
+  "customizations": {
+    "vscode": {
+      // The same set .vscode/extensions.json recommends, installed inside the
+      // container so the editor lints with the image's tools rather than
+      // whatever happens to be on the host.
+      "extensions": [
+        "DavidAnson.vscode-markdownlint",
+        "ChrisChinchilla.vale-vscode",
+        "shd101wyy.markdown-preview-enhanced",
+        "bierner.markdown-mermaid",
+        "streetsidesoftware.code-spell-checker",
+        "redhat.vscode-yaml",
+        "yzhang.markdown-all-in-one"
+      ]
+    }
+  }
+}
