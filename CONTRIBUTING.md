@@ -46,15 +46,26 @@ Recommended examples:
 
 ## Before Opening a Pull Request
 
-Run the local checks:
+Run the local checks. This repository has no `scripts/` directory — every
+tool comes from the toolkit image, so commands run bare in Dev Spaces or a
+Dev Container, or through the `dac` shell function defined in the README
+under "Where the Toolchain Runs":
 
 ```bash
-python3 scripts/lint-frontmatter.py --path .
-python3 scripts/lint-mermaid.py --path .
-python3 scripts/lint-prose.py --no-exit
-markdownlint .
-make docx-validate
+lint-frontmatter.py --path .
+lint-mermaid.py --path .
+lint-encoding.py --path .
+markdownlint-cli2 "**/*.md" "!dac/vale" "!exports" "!archive"
+vale sync && vale docs/ decisions/ governance/ initiatives/ patterns/ references/
+docx-build-all --dry-run
 ```
+
+These are the same commands CI runs. The first four are the blocking gates —
+clean here means clean on the pull request. Vale is advisory in CI and needs
+`vale sync` once per fresh clone or workspace, because the downloaded style
+packages are gitignored; without it Vale fails outright rather than
+reporting findings. Read its findings and act on the ones that improve the
+document — a locally "failing" Vale run does not block the merge.
 
 ## Pull Requests
 
@@ -62,17 +73,26 @@ make docx-validate
 2. Call out any starter-template taxonomy changes explicitly.
 3. Note whether the change should also be mirrored into downstream content
    repositories.
-4. Reference the Jira ticket or work item in the PR description.
+4. Reference the work item in the PR description, if your team tracks work
+   in a ticketing system.
 
 ## Suggested Commit Style
 
-Use the Jira key at the front of the commit subject:
+If your team uses a tracker, put its key at the front of the commit subject:
 
 ```text
 ARCH-1234 Add manifest-driven content repo entrypoints
 ARCH-1288 Update guide template wording
 ARCH-1402 Fix Mermaid lint examples
 ```
+
+**Why key-first matters if your team uses Jira:** the GitHub-Jira
+integration associates work automatically by matching the issue key. A
+branch whose name **starts with the key** (`ARCH-1234-short-description`)
+is linked to the issue, and its pull request and commits follow — no manual
+linking. The key must lead; a key buried mid-name is not reliably matched.
+Teams without Jira lose nothing by keeping the convention, and gain the
+linkage for free if they adopt it later.
 
 ## Code of Conduct
 

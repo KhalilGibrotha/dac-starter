@@ -60,75 +60,11 @@ root. See [dac/README.md](dac/README.md) for what each file does.
    branding until this file exists — the template ships only the example, so
    covers fall back to plain text without it. Add a logo as `dac/logo.png`
    if you have one; it is picked up automatically.
-3. Choose where the tools run. Each option gives you the same toolkit image,
-   and every toolkit command in this guide is written as `<command>`.
-
-   **Locally with podman or docker** — nothing to install beyond the
-   container runtime. The tools live in the image, so each command runs in a
-   throwaway container. Define this shell function once per session and the
-   rest of this guide works as written:
-
-   ```bash
-   dac() { podman run --rm -v "$PWD:/work:Z" -w /work \
-     ghcr.io/khalilgibrotha/dac-toolkit:latest "$@"; }
-   ```
-
-   Then prefix each command with `dac` — for example `dac docx-build-all`.
-   Without the function, write the full `podman run ...` line every time.
-
-   **Windows PowerShell** parses a bare `$PWD:` as a drive reference, so the
-   braces matter:
-
-   ```powershell
-   function dac { podman run --rm -v "${PWD}:/work:Z" -w /work `
-     ghcr.io/khalilgibrotha/dac-toolkit:latest @args }
-   ```
-
-   **Windows Git Bash** rewrites container paths unless you disable that, so
-   use:
-
-   ```bash
-   dac() { MSYS_NO_PATHCONV=1 podman run --rm \
-     -v "$(pwd -W)://work:z" -w //work \
-     ghcr.io/khalilgibrotha/dac-toolkit:latest "$@"; }
-   ```
-
-   If podman appears to hang or refuses to connect, start its VM first:
-   `podman machine start`.
-
-   **In Visual Studio Code with Dev Containers** — the same image, with the editor
-   inside it: linting as you type, and a terminal where commands run bare
-   with no `dac` prefix. Install the Dev Containers extension, open the
-   repository, and choose **Reopen in Container**;
-   `.devcontainer/devcontainer.json` handles the rest. To use podman instead
-   of Docker Desktop, set this once in your **User** settings:
-
-   ```jsonc
-   {
-     "dev.containers.dockerPath": "podman"
-   }
-   ```
-
-   **In OpenShift Dev Spaces** — if your organization runs it, paste the
-   repo's Git URL into **Import from Git** on your Dev Spaces dashboard (ask
-   your platform team for the URL). `devfile.yaml` starts the workspace on
-   the same image with every tool already on your PATH, so commands run
-   bare, with no `dac` prefix.
-
-   On a **new workspace**, warm the commit hooks once before you start
-   working:
-
-   ```bash
-   pre-commit install-hooks
-   ```
-
-   This builds the hook environments — a few minutes, and the heaviest thing
-   the workspace will do. `devfile.yaml` puts that cache on the persistent
-   volume, so it happens once rather than after every restart. Skipping this
-   step does not break anything; it just moves the cost onto your first
-   commit, where a memory-capped workspace may drop the connection instead.
-   If a commit ever has to go through while the workspace is struggling,
-   `git commit --no-verify` bypasses the hooks and CI still gates the branch.
+3. Choose where the tools run — [Where the Toolchain Runs](#where-the-toolchain-runs)
+   walks through each option. Every option gives you the same toolkit image.
+   In Dev Containers and Dev Spaces, commands run bare; in a local container,
+   prefix them with the `dac` shell function defined there. This guide writes
+   both forms where they differ.
 4. Copy a template from `dac/templates/` into `docs/`, fill in the front
    matter, and write.
 5. Build. In Dev Spaces: **Terminal → Run Task → "Build changed documents"**,
@@ -164,10 +100,10 @@ documents, builds that skip everything, missing cover logos.
 
 ## Quick Start: Existing Repository
 
-First pick where the tools run — step 3 above covers every option, including
-the `dac` shell function the local-container path needs. Dev Containers and Dev
-Spaces run commands bare, with no prefix. Then run `dac-init` from your
-repository root and it installs the managed set for you:
+First pick where the tools run — [Where the Toolchain Runs](#where-the-toolchain-runs)
+covers every option, including the `dac` shell function the local-container
+path needs. Then run `dac-init` from your repository root and it installs the
+managed set for you:
 
 ```bash
 dac-init                # Dev Spaces
@@ -191,6 +127,104 @@ folder produces a `scan path not found` warning on every build.
 
 Nothing else is required — the tools come from the image.
 
+### Adopting on an Existing Corpus
+
+The formal-document machinery is opt-in per file. The front matter gate
+skips any Markdown file without a front matter block, and the DOCX build
+scans only documents that carry one. Your legacy content is ignored until
+you migrate it — one document at a time, by adding front matter from a
+template. Nothing forces a bulk conversion.
+
+Markdown lint, encoding artifacts, and Mermaid preflight check the whole
+corpus regardless — every `.md` in the repository, front matter or not. On a
+corpus with history, expect the first CI run to fail on files nobody has
+touched. [TROUBLESHOOTING.md](TROUBLESHOOTING.md) ("Every document fails the
+gates on day one") covers the ways through — fix by rule category across all
+documents, which goes much faster than file by file, or change the rules
+that do not fit your content.
+
+A sequence that fits those behaviors:
+
+1. Install the toolset (`dac-init`) and confirm a build runs.
+2. Put new documents on the pipeline immediately; migrate old ones as you
+   touch them.
+3. Clean the corpus against the three whole-corpus gates, one rule category
+   at a time.
+4. Protect the branch and require the blocking checks once the corpus passes
+   them. Required checks a corpus cannot pass teach the team
+   `git commit --no-verify`, and then they gate nothing.
+
+---
+
+## Where the Toolchain Runs
+
+Four options, one image. Pick whichever fits how you work; nothing else in
+this guide changes.
+
+**Locally with podman or docker** — nothing to install beyond the container
+runtime. The tools live in the image, so each command runs in a throwaway
+container. Define this shell function once per session and prefix each
+command with `dac` — for example `dac docx-build-all`:
+
+```bash
+dac() { podman run --rm -v "$PWD:/work:Z" -w /work \
+  ghcr.io/khalilgibrotha/dac-toolkit:latest "$@"; }
+```
+
+**Windows PowerShell** parses a bare `$PWD:` as a drive reference, so the
+braces matter:
+
+```powershell
+function dac { podman run --rm -v "${PWD}:/work:Z" -w /work `
+  ghcr.io/khalilgibrotha/dac-toolkit:latest @args }
+```
+
+**Windows Git Bash** rewrites container paths unless you disable that, so
+use:
+
+```bash
+dac() { MSYS_NO_PATHCONV=1 podman run --rm \
+  -v "$(pwd -W)://work:z" -w //work \
+  ghcr.io/khalilgibrotha/dac-toolkit:latest "$@"; }
+```
+
+If podman appears to hang or refuses to connect, start its VM first:
+`podman machine start`.
+
+**In Visual Studio Code with Dev Containers** — the same image, with the
+editor inside it: linting as you type, and a terminal where commands run
+bare with no `dac` prefix. Install the Dev Containers extension, open the
+repository, and choose **Reopen in Container**;
+`.devcontainer/devcontainer.json` handles the rest. To use podman instead of
+Docker Desktop, set this once in your **User** settings:
+
+```jsonc
+{
+  "dev.containers.dockerPath": "podman"
+}
+```
+
+**In OpenShift Dev Spaces** — if your organization runs it, paste the repo's
+Git URL into **Import from Git** on your Dev Spaces dashboard (ask your
+platform team for the URL). `devfile.yaml` starts the workspace on the same
+image with every tool already on your PATH, so commands run bare, with no
+`dac` prefix.
+
+On a **new Dev Spaces workspace**, warm the commit hooks once before you
+start working:
+
+```bash
+pre-commit install-hooks
+```
+
+This prepares the hook environments. `devfile.yaml` keeps the cache on the
+persistent volume, so it happens once rather than after every restart.
+Skipping it does not break anything; it just moves the cost onto your first
+commit. If a commit ever has to go through while the workspace is
+struggling, `git commit --no-verify` bypasses the hooks — CI still runs the
+same gates on the pull request, and with branch protection configured they
+block the merge there.
+
 ---
 
 ## Building Documents
@@ -211,18 +245,55 @@ Single document, when you want one file fast:
 docx-build docs/my-doc.md --org dac/org.yaml --output exports/my-doc.docx
 ```
 
-## Checks
+## Commits, Pull Requests, and CI
 
-The same gates run in three places — editor (as you type), opt-in pre-commit
-hook, and CI on every pull request — all from the same image:
+The working loop is ordinary GitHub flow, with the gates doing the policing:
 
-| Gate | What it catches |
-|---|---|
-| Front matter validation | Missing or invalid YAML metadata |
-| Markdown lint | Structural Markdown problems |
-| Mermaid preflight | Diagram syntax the renderer would reject (`flowchart`, not `graph`) |
-| Encoding artifacts | Smart quotes, no-break spaces, mojibake |
-| Vale (advisory) | House prose style, plus AI-prose tells (`ai-tells`) |
+1. **Branch** from your base branch (`feature/<short-description>`, or
+   whatever convention your team uses — see
+   [CONTRIBUTING.md](CONTRIBUTING.md) for a recommended model).
+2. **Write and build.** Edit documents, run `docx-build-all`, review the
+   generated DOCX in `exports/`.
+3. **Commit.** Hooks are opt-in: run `pre-commit install` once per clone and
+   the blocking gates below run on each commit. Skip them any time with
+   `git commit --no-verify` — nothing is lost, because CI runs the same
+   gates on the pull request regardless. The hooks exist to catch problems
+   at your desk instead of in review.
+4. **Open a pull request.** CI runs every gate inside the same toolkit image
+   your workspace uses — same tools, same versions, so a clean local run
+   means a clean CI run. Results appear as checks on the PR.
+5. **Merge when the checks pass.** The blocking gates are the merge bar;
+   Vale is advice, not a bar.
+
+The content gates run in all three places — editor (as you type), pre-commit
+hook, and CI — all from the same image. The secret scan is the one exception:
+it runs in CI only, since it scans history rather than a working tree.
+
+| Gate | What it catches | Blocks the merge? |
+|---|---|---|
+| Secret scan (gitleaks) | Tokens, keys, credentials — anywhere in history | Yes |
+| Front matter validation | Missing or invalid YAML metadata | Yes |
+| Markdown lint | Structural Markdown problems | Yes |
+| Mermaid preflight | Diagram syntax the renderer would reject (`flowchart`, not `graph`) | Yes |
+| Encoding artifacts | Smart quotes, no-break spaces, mojibake | Yes |
+| Vale | House prose style, plus AI-prose tells (`ai-tells`) | No — advisory |
+
+Each CI job writes its result to the run's summary page — open the workflow
+run and the summary reads as a report: files checked, findings counted,
+secrets scanned. The secret scan runs on the runner rather than in the
+toolkit image (gitleaks is not part of the image) and scans the full history,
+not just the diff.
+
+Advisory means judgment: read Vale's findings in the job log and act on the
+ones that improve the document. A flagged construct that carries real
+meaning stays.
+
+**Recommended once your team is on board:** protect your base branch and
+mark the five blocking gates as required status checks
+(**Settings → Branches → Branch protection**). That turns "merge when the
+checks pass" from a habit into a guarantee, and it is what makes auto-merge
+safe to enable if your team wants it. Keep Vale off the required list — that
+is what keeps advisory honest.
 
 ## Diagrams: Mermaid First
 
