@@ -145,26 +145,12 @@ jobs:
       - name: Sync Vale packages
         run: vale sync
 
-      # Advisory on findings, honest about failure: exit 1 means findings
-      # (allowed through), exit 2 means Vale itself could not run — missing
-      # styles, bad config. A Vale that cannot run has checked nothing, and
-      # reporting that as a green advisory check would hide a real breakage.
+      # lint-prose.py ships in the image. One Vale run in JSON mode rendered
+      # three ways: the per-finding log, a per-document table on the run
+      # summary (worst documents first), and a headline score - percent of
+      # documents error-free. Advisory on findings (--no-exit), honest about
+      # failure: a Vale that cannot run (missing styles, bad config) exits
+      # >= 2 and fails the job, because it has checked nothing. The script
+      # writes its own summary section, so no trailer step is needed.
       - name: Run Vale
-        shell: bash
-        run: |
-          vale docs/ decisions/ governance/ initiatives/ patterns/ references/ 2>&1 | tee gate-out.txt
-          rc=${PIPESTATUS[0]}
-          if [ "$rc" -ge 2 ]; then
-            echo "Vale runtime failure (exit $rc) — styles missing or config invalid." >&2
-            exit "$rc"
-          fi
-      - name: Job summary
-        if: always()
-        run: |
-          {
-            echo "## Vale prose lint - advisory"
-            grep -aE "[0-9]+ errors?.*[0-9]+ warnings?" gate-out.txt | tail -n 1 || echo "No findings."
-            echo
-            echo "_Advisory: findings do not block this merge. Full detail is in the job log._"
-            echo
-          } >> "$GITHUB_STEP_SUMMARY"
+        run: lint-prose.py --no-exit
