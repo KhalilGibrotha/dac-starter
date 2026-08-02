@@ -1,13 +1,15 @@
 {
   ".github/workflows/lint.yml": [
-    "sha256:aa7ce22665a72ffc781fcf45e0adeb84ed429cfef3995a910e67898656311b3c"
+    "sha256:aa7ce22665a72ffc781fcf45e0adeb84ed429cfef3995a910e67898656311b3c",
+    "sha256:f4178065a5ff124cc4acf0abf6c2fcd334aae0c562ea3ba64de6e26edf80b09d"
   ],
   ".markdownlint.json": [
     "sha256:8f647eadbc47e8a79fd308bb2edb21f4d3545dcdcc0919bfde9f2c42bd72877c",
     "sha256:7d38ca165790602d1db487f16e6ba0c28cbb132159f2a5fa72bb63697000bef7"
   ],
   ".pre-commit-config.yaml": [
-    "sha256:023fa9e7ca77260c7bbd312b99258f17a709c7f2471a11b16b6d6de3f1628c19"
+    "sha256:023fa9e7ca77260c7bbd312b99258f17a709c7f2471a11b16b6d6de3f1628c19",
+    "sha256:ffd9aef5dbca5cb906cb2187adde4a547318346a0bbaf30de7c6eac21fda1892"
   ],
   ".vale.ini": [
     "sha256:5e74234b1be4ecd58dc599f5662696a9f812fd797457a7a6d06eea1c2bb4333f"
@@ -139,17 +141,407 @@
   "dac/vale/styles/DocOps/PlaybookCapitalization.yml": [
     "sha256:355886466296ca63f1a6526ada567bacebbb659e4da303010e2d7dded72a8545"
   ],
+  "dac/vale/styles/RedHat/Abbreviations.yml": [
+    "sha256:a395db41ef5011bed870311993ec0409c59b6b3ae511b6eb5d2a465933f04a1f"
+  ],
+  "dac/vale/styles/RedHat/CaseSensitiveTerms.yml": [
+    "sha256:4603d06292473d62172877feb22962ce16fb21f94678ad64fc579a03dad3823a"
+  ],
+  "dac/vale/styles/RedHat/Conjunctions.yml": [
+    "sha256:8592b67dba912eb64fae588b822abd75f50a9563e1701823abaa4d722bc5abb7"
+  ],
+  "dac/vale/styles/RedHat/ConsciousLanguage.yml": [
+    "sha256:30ade1ea3bf09d435a1368bb6037b5998793c546a0c4a3fc4d52eb7bf49e7704"
+  ],
+  "dac/vale/styles/RedHat/Contractions.yml": [
+    "sha256:ce64e5e4371212ff24fc38db7fdc8f649ab4bf666f5a1f683235e8bc2e668b52"
+  ],
+  "dac/vale/styles/RedHat/Definitions.yml": [
+    "sha256:ece988b90bb5e640e3e704092635058315b32d53f3cf0cf73d88dc55e7afd8ba"
+  ],
+  "dac/vale/styles/RedHat/DoNotUseTerms.yml": [
+    "sha256:00deb50bc1efc915a9faf54e2f1f8470f478a49b6bd0085d704dae05e9ab6b2c"
+  ],
+  "dac/vale/styles/RedHat/Ellipses.yml": [
+    "sha256:a44aedb902750cfb107f2a10e2697d22d49e09187bb9eeeebf80c429ff0e2d7b"
+  ],
+  "dac/vale/styles/RedHat/EmDash.yml": [
+    "sha256:9886399a1aca9c87e81782b376146853dfd82c96b1b745865743a2088f006e95"
+  ],
+  "dac/vale/styles/RedHat/GitLinks.yml": [
+    "sha256:161a0e8e284ab30307e7774ec0f0d1989239c93af667b10d74eb9681d53b26f2"
+  ],
+  "dac/vale/styles/RedHat/HeadingPunctuation.yml": [
+    "sha256:4dc744d1450da866958bf4733e22d825c0472c94dd090e8963004ad43a44f493"
+  ],
+  "dac/vale/styles/RedHat/Headings.yml": [
+    "sha256:a9138a8909335bfda185d72ab0f796900ced8893cfa3a601d112c77bb4a6a82b"
+  ],
+  "dac/vale/styles/RedHat/Hyphens.yml": [
+    "sha256:239eab3fca83e8c28fc910475e16a6543825ceebe9abae0570859cf9aa91f0f0"
+  ],
+  "dac/vale/styles/RedHat/MergeConflictMarkers.yml": [
+    "sha256:3cb2c8192c9e374b5868c98ede6f6cf67cc2eaa7a5880addb77c823e3231572a"
+  ],
+  "dac/vale/styles/RedHat/NoGerundsInTitles.yml": [
+    "sha256:a464c4ba0342647ac2e1f837d022e13ab220db5124e999938d8f773f52171048"
+  ],
+  "dac/vale/styles/RedHat/ObviousTerms.yml": [
+    "sha256:b2b41dbb2c52c81b50e01f088b503565ad347e44d81b8df8e1d209bcc5410bc1"
+  ],
+  "dac/vale/styles/RedHat/OxfordComma.yml": [
+    "sha256:ee23374398067e87b2bc3b40cc48e8895b30c70abb87342c828a59d622e92fd2"
+  ],
+  "dac/vale/styles/RedHat/PascalCamelCase.yml": [
+    "sha256:184ed00fe185c4a9fd0660b8ff79e22928c5875f6f20d95d63db9eb697ad59c6"
+  ],
+  "dac/vale/styles/RedHat/PassiveVoice.yml": [
+    "sha256:b991e29e54f119b9d4703ca8dda4b07eea2ae3c9db2c4453ab9283b546c01a41"
+  ],
+  "dac/vale/styles/RedHat/ProductCentricWriting.yml": [
+    "sha256:0a8742b83e6e1848686320809b385829cc6b3a24d5b492e75205369894a7a343"
+  ],
+  "dac/vale/styles/RedHat/README-IBM.adoc": [
+    "sha256:58b0e7737f87f5d783d9add5ad97b53750e51f70e30a0fd84c3dd4061366dbec"
+  ],
+  "dac/vale/styles/RedHat/README-proselint.md": [
+    "sha256:46cdf88652daa9b2efaf5ad5ace3382d4334674e486cb55f3ea3ebbc9f3201d9"
+  ],
+  "dac/vale/styles/RedHat/README-write-good.md": [
+    "sha256:2e682db6696a3518b256345b04e5f505e3d6204202e424b56fd665840f4c0cbb"
+  ],
+  "dac/vale/styles/RedHat/ReadabilityGrade.yml": [
+    "sha256:77b27643128af50081e83253d1aec42106eccb0bf8948033a9cb40a3b40ab93c"
+  ],
+  "dac/vale/styles/RedHat/ReleaseNotes.yml": [
+    "sha256:73664fa552301cc1ffcc9b86579c7f0e061dab09f55fc03990e2cd7bdc1aab40"
+  ],
+  "dac/vale/styles/RedHat/RepeatedWords.yml": [
+    "sha256:f6fabecd540544112fba896621bfc778efd1e914b6be646a0dd9d0e4326760b4"
+  ],
+  "dac/vale/styles/RedHat/SelfReferentialText.yml": [
+    "sha256:aa137b7fb7e3b473816cc29b80694711c4935267c4d22b0a97571fc8978e0d04"
+  ],
+  "dac/vale/styles/RedHat/SentenceLength.yml": [
+    "sha256:8e369de4eb6b8ce00198a66e90013b1bbbee37afd5aa9e322453058e8f2ffcfe"
+  ],
+  "dac/vale/styles/RedHat/SessionId.yml": [
+    "sha256:ce1591cacef47c997e7746214196ae3eeee2578a8151631a8be15752948fb71e"
+  ],
+  "dac/vale/styles/RedHat/SimpleWords.yml": [
+    "sha256:a95868e5863482847aad0d844b2f56786501b3701a2202a269f2b1fa600dd1fd"
+  ],
+  "dac/vale/styles/RedHat/Slash.yml": [
+    "sha256:dc71e5bfab0715d32068ecf05202920c7335fa50011e088a27e42ba23a0176e8"
+  ],
+  "dac/vale/styles/RedHat/SmartQuotes.yml": [
+    "sha256:1b0fccf30886732c8b19961954dae54deecba5ea4f6f6c4058c7ae4276795009"
+  ],
+  "dac/vale/styles/RedHat/Spacing.yml": [
+    "sha256:e68cee8faca0cfe476aa80d421f54a785bf00051ba709866621a4064ce2aae96"
+  ],
+  "dac/vale/styles/RedHat/Spelling.yml": [
+    "sha256:aaab5c4590d5a1d2787b60be1d6d7797f2da0d0a45d97973a729834a273ae849"
+  ],
+  "dac/vale/styles/RedHat/Symbols.yml": [
+    "sha256:5d302468c628852e50373f4a2da8a2143e1979869b2a3049f995450fe2ef3d23"
+  ],
+  "dac/vale/styles/RedHat/TermsErrors.yml": [
+    "sha256:c97d341ba07ef482f18e2ef7d10ac6ab985d4de61989c28e872f04d562b3bf1d"
+  ],
+  "dac/vale/styles/RedHat/TermsSuggestions.yml": [
+    "sha256:88c566ea70e9ad2283352bbdd849a1f3805cbdf9f4f84d6a407d5a5446301900"
+  ],
+  "dac/vale/styles/RedHat/TermsWarnings.yml": [
+    "sha256:f55ec60dcea729e6c54be5288565ee77a9de9e11d14e045273928db3d67e0f54"
+  ],
+  "dac/vale/styles/RedHat/UserReplacedValues.yml": [
+    "sha256:6c38573b13d16fc11879856b023ff5d02af540aa81899fe3af0d4748627e256a"
+  ],
+  "dac/vale/styles/RedHat/Using.yml": [
+    "sha256:1e2e4e51b66c23db59f1c35e4fc4f8ed733a0f1c87914e47dd5af8d948a1eff1"
+  ],
+  "dac/vale/styles/RedHat/collate-output.tmpl": [
+    "sha256:615839e55902c5b973737e53723f98adc206ea229030e1eb3a1bb943ec25b0d1"
+  ],
+  "dac/vale/styles/RedHat/dictionaries/en_US-RedHat.aff": [
+    "sha256:4340182db519dffba7ece9519507523395ba84a07d97d46f7afbd9e27f31cf17"
+  ],
+  "dac/vale/styles/RedHat/dictionaries/en_US-RedHat.dic": [
+    "sha256:508eda496740d682de39507101444fcdea104f4511afb1780eae35e81b78cfaf"
+  ],
+  "dac/vale/styles/RedHat/dictionaries/wordlist.txt": [
+    "sha256:2670eab739a97c7a55d41dcfeddf5eeaa8741fc36be41fd6661feee77cb951dc"
+  ],
   "dac/vale/styles/Vocab/ArchitectureDocs/accept.txt": [
     "sha256:01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
   ],
   "dac/vale/styles/Vocab/ArchitectureDocs/reject.txt": [
     "sha256:01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
   ],
+  "dac/vale/styles/ai-tells/AIAdjectiveNounPairs.yml": [
+    "sha256:19aa22e04df90c6919477a152a54df9126c5fe73a6cadf603f9ceb8084a014a4"
+  ],
+  "dac/vale/styles/ai-tells/AICompoundPhrases.yml": [
+    "sha256:b829c24e847d72c992d54daa28383f2230a57d62f3fb14217cfa5cdb2c776624"
+  ],
+  "dac/vale/styles/ai-tells/AbsoluteAssertions.yml": [
+    "sha256:af863880250d4d77248f8eceaae9227e6fd04babd81de55ee5eef68824abf675"
+  ],
+  "dac/vale/styles/ai-tells/AffirmativeFormulas.yml": [
+    "sha256:87c4dee41e69f76d5bb5d414546de98d1eda8ce4bb72a21a46a18f0f8cc96541"
+  ],
+  "dac/vale/styles/ai-tells/AnnouncementHeadings.yml": [
+    "sha256:c8a18d3a1b86932023380532b131579ff0ab4bd846ee17a2f541cce00dcbdb4c"
+  ],
+  "dac/vale/styles/ai-tells/AnthropomorphicJustification.yml": [
+    "sha256:2d73fec9ac6f4bf9872197ea18899227ef1f8ea0c6c57405f5d8432eb2beb314"
+  ],
+  "dac/vale/styles/ai-tells/CataphoricForecasting.yml": [
+    "sha256:6898484321d177211b40d7d6a40f33391c9bbb5d047fab54776a1bcb40e49781"
+  ],
+  "dac/vale/styles/ai-tells/ClosingPleasantries.yml": [
+    "sha256:68baeb4c5ce2ac5314ebea78e9e4808e72baa8e4a9180918082b738db6843e20"
+  ],
+  "dac/vale/styles/ai-tells/ColloquialAssessments.yml": [
+    "sha256:d07b9ac3e370fcac03761655691e4348d92cd60df39c6dae677b8ee1dd733dd4"
+  ],
+  "dac/vale/styles/ai-tells/ColonUsage.yml": [
+    "sha256:6227031369f99417a98c6a6b5e32facfee5c89797e2e4d29a21e70a4f9a4419b"
+  ],
+  "dac/vale/styles/ai-tells/ConclusionMarkers.yml": [
+    "sha256:5e0c466d30b903da1ef671d639053b7f55ab88e63826014238182280af63a874"
+  ],
+  "dac/vale/styles/ai-tells/ContrastiveFormulas.yml": [
+    "sha256:946b58d3c80bb3c2479f3a7660e1421507b9547f469f13cd4a0d4a892b241cf7"
+  ],
+  "dac/vale/styles/ai-tells/ContrastiveNegation.yml": [
+    "sha256:16826052f0f14f24a10d0054faf0655634af5ab470fca71d10bce61ea7c19239"
+  ],
+  "dac/vale/styles/ai-tells/DefensiveHedges.yml": [
+    "sha256:79cdec199394f74602a02f432f8608f449f9e6eceee79bfa3080de1369bf6081"
+  ],
+  "dac/vale/styles/ai-tells/DespiteChallenges.yml": [
+    "sha256:b2e31616c97ebd2e285c32f27feccfafd6f3c7185a22b2820b6d644f0789a0c3"
+  ],
+  "dac/vale/styles/ai-tells/EmDashUsage.yml": [
+    "sha256:f46c9a76f22da42ae547a1a684087514b9cf236b5ff8e38a3763f2e62cbf7f2d"
+  ],
+  "dac/vale/styles/ai-tells/EmphaticCopula.yml": [
+    "sha256:f3d0764a26d02c9b2a4a8038ccba5150a3eebc7bb6ec1ada4ceef8fd78d38803"
+  ],
+  "dac/vale/styles/ai-tells/EmptyPadding.yml": [
+    "sha256:a9ebc3c6f33e9fb2b8f19e60a170fbb37492327232754bf07b5981e3647a1dd1"
+  ],
+  "dac/vale/styles/ai-tells/EmptyPaddingStacked.yml": [
+    "sha256:250be682fe96327c49141bc135f3ce8441918c681df7e57f2e865178a460d878"
+  ],
+  "dac/vale/styles/ai-tells/ExplainerHeadings.yml": [
+    "sha256:a2ed5760a213046857c3f71624c541eb425ecaf1458c506a9576233cf5f2a979"
+  ],
+  "dac/vale/styles/ai-tells/FalseBalance.yml": [
+    "sha256:042d7167f77d25b6cf92477455805a866ff38ee2e1b0f71cb9f24eb152f1b4a3"
+  ],
+  "dac/vale/styles/ai-tells/FalseExclusivity.yml": [
+    "sha256:71e09b3e76ce6f92a1ba4f9e0f521f3ef60b4ec6698cd7c9eb1f2b2ce01d135b"
+  ],
+  "dac/vale/styles/ai-tells/FigurativeCarries.yml": [
+    "sha256:29a6d3e55bceba0f40a50fa42d44f1d7a207240d1dc246f76d0ccf16afef34be"
+  ],
+  "dac/vale/styles/ai-tells/FigurativeCasts.yml": [
+    "sha256:a28ec899173c5855431e90496bf359c8dce2dc179a83e4d3b52adea699534202"
+  ],
+  "dac/vale/styles/ai-tells/FigurativeDraws.yml": [
+    "sha256:33d5122338dc62b19e138c328c9af503d7b49fd664c8b5245e151b66c2571e31"
+  ],
+  "dac/vale/styles/ai-tells/FigurativeFalls.yml": [
+    "sha256:b0cd2694855da04782077a6c9dfb8f90f747745900d6218750a12dbfcba69258"
+  ],
+  "dac/vale/styles/ai-tells/FigurativeHolds.yml": [
+    "sha256:ee6f45aaa355c79a2d0c5d6e7a1fd9bb29f96f186ecc8898316a14c4aa396a48"
+  ],
+  "dac/vale/styles/ai-tells/FigurativeLands.yml": [
+    "sha256:c3760f5957544f9c24dcbf7f9d47d4def6ec3fc344aea898c009059910dc2dd5"
+  ],
+  "dac/vale/styles/ai-tells/FigurativeLends.yml": [
+    "sha256:a3886ae633d7709e4f5af110812931f9a6630256f0b29cff17eb24c9176f924d"
+  ],
+  "dac/vale/styles/ai-tells/FigurativeLoud.yml": [
+    "sha256:57120b2ee202e35bd5131a0bed8888a210c899f73e2e7f250156da881c978498"
+  ],
+  "dac/vale/styles/ai-tells/FigurativeQuiet.yml": [
+    "sha256:6a056b24b12d90d161ed7ec4eb331b8a77707b8c4146a8b6ca1a58f6868da5a1"
+  ],
+  "dac/vale/styles/ai-tells/FigurativeRides.yml": [
+    "sha256:016e346202aef51b5fe63ffb4fa20cb7623ea4968a8a6ec3f8d8cc79b167572b"
+  ],
+  "dac/vale/styles/ai-tells/FigurativeRuns.yml": [
+    "sha256:7fc1f81a95965bc7c8751b0e7f7d975a3e0bae16b697284f65e4f772c025e36a"
+  ],
+  "dac/vale/styles/ai-tells/FigurativeSits.yml": [
+    "sha256:4d8cda7c35377dbc603e2f4f74e5cafbfb8775e70552c90128370393cb4d01a0"
+  ],
+  "dac/vale/styles/ai-tells/FigurativeStrikes.yml": [
+    "sha256:79852f0cd0b51b692eb4162ebceabe8a5fc525b2aa221b2455b83159818090e6"
+  ],
+  "dac/vale/styles/ai-tells/FigurativeWins.yml": [
+    "sha256:64abfa5b199b7fa9293ba7c0597acdb215c01eda70fd8e7ed47328019589dd36"
+  ],
+  "dac/vale/styles/ai-tells/FillerPhrases.yml": [
+    "sha256:b0b070902b30a90f3d5692d3c6b08287b990e4487ca40ceaceb92ed3eb2e20db"
+  ],
+  "dac/vale/styles/ai-tells/FormalRegister.yml": [
+    "sha256:639f6fc3566b2069e2c25560cf8f612907075bfc9654a87fd4ec7b69144c614d"
+  ],
+  "dac/vale/styles/ai-tells/FormalTransitions.yml": [
+    "sha256:13f23755a5d8bb9dac49f3e016dda279172a1c374c78a23380894ea47f17c5db"
+  ],
+  "dac/vale/styles/ai-tells/GrowthMetaphors.yml": [
+    "sha256:f4d5e202bcd7f4d304c020809ea7b47815e6ef5f73c00a1bd2b8e4657c9928f9"
+  ],
+  "dac/vale/styles/ai-tells/HedgingPhrases.yml": [
+    "sha256:d258da219e1ef41919551e3efef441f8326f43e561a3b29256dc86f6d2c1bf73"
+  ],
+  "dac/vale/styles/ai-tells/HollowAcknowledgment.yml": [
+    "sha256:1f406bcbcf2df767a375e898994545f72be14eaf9b0b639795c4ba07c1757288"
+  ],
+  "dac/vale/styles/ai-tells/LabelAndExplain.yml": [
+    "sha256:383df79d06664f78e66ab1dcc4e0a0a72779c3755bd38235b281c3844bf3fd92"
+  ],
+  "dac/vale/styles/ai-tells/ListIntroductions.yml": [
+    "sha256:272a220099e4ebc1e5e4965a232d444106c7ab29b4c376b57af99f1aeff18882"
+  ],
+  "dac/vale/styles/ai-tells/MarketingHeadings.yml": [
+    "sha256:210a4396cbd0cecba583a83b14d954653455b958db723bbb5bc3e899ddf9355c"
+  ],
+  "dac/vale/styles/ai-tells/Metacommentary.yml": [
+    "sha256:9f3995ae98a4d178701084916bbad2c28b48856a1842c74345bb7a9da1a2283d"
+  ],
+  "dac/vale/styles/ai-tells/MicDrop.yml": [
+    "sha256:8dc453143a3fe0827853c6f21410b5ac6479bf34669d8d309aeddbf84262a387"
+  ],
+  "dac/vale/styles/ai-tells/MicDropHeadings.yml": [
+    "sha256:c632384f75c3a1970013292ebf700970241ec0cb48e85100e55388f55626244c"
+  ],
+  "dac/vale/styles/ai-tells/NarrativePivots.yml": [
+    "sha256:237fa048855a9e25218249eedec5730c54b64d7c81015da38c1771f596abe4c8"
+  ],
+  "dac/vale/styles/ai-tells/OpeningCliches.yml": [
+    "sha256:21ca5e0fef4923ef3896d2dc6ac60f50720364a777a55ee611ae6e9e0d86b2e2"
+  ],
+  "dac/vale/styles/ai-tells/OrganicConsequence.yml": [
+    "sha256:b529eaace1b4db94c6d156aab1e0f25486d0b91312ff751be414eff1c883cfe6"
+  ],
+  "dac/vale/styles/ai-tells/OverusedVocabulary.yml": [
+    "sha256:98b05121676de11f35aea88b165fab22fc652337a513e2dd841a9152d21bc6a1"
+  ],
+  "dac/vale/styles/ai-tells/OverusedVocabularyVerbs.yml": [
+    "sha256:c3024c0acf85d04b8354e921fc6eca2fc8e53cf24dfac85ff229b566f6efcee8"
+  ],
+  "dac/vale/styles/ai-tells/ParallelStaccato.yml": [
+    "sha256:0515c8c596d8cd9d5ca3fea19f0e9e8761463e724cd074dc690bae39779f0836"
+  ],
+  "dac/vale/styles/ai-tells/ParticipialPadding.yml": [
+    "sha256:3014964ad9afe85be3ac6400538d0653bf80a796f1b6347c85751f9f1354d147"
+  ],
+  "dac/vale/styles/ai-tells/PromotionalPuffery.yml": [
+    "sha256:50c0017c4c44c6be12bd0bfa707812057401558d8a4b38800cca72be733db8c8"
+  ],
+  "dac/vale/styles/ai-tells/RedundantPrecaution.yml": [
+    "sha256:7138dbe3b4cc81ec682ee3e04d98f5e2a55de472a5a7222298d11638e55d4819"
+  ],
+  "dac/vale/styles/ai-tells/ResonateOveruse.yml": [
+    "sha256:f5a1ab6b8ac874e7f5579b77c09dc85687b3456a439d552a3aaaf81b7f3371ea"
+  ],
+  "dac/vale/styles/ai-tells/RestatementMarkers.yml": [
+    "sha256:1cd100b5473b11c79711f94f364a94f5a0f47c0003027194d5b0dad46e617662"
+  ],
+  "dac/vale/styles/ai-tells/RhetoricalDevices.yml": [
+    "sha256:cc9935e4b535cf0c6a415a0bcf285224802bd22d2be1065e0786d3fd4395777f"
+  ],
+  "dac/vale/styles/ai-tells/RhetoricalSelfAnswer.yml": [
+    "sha256:d5fcca657b55324afe357a350224fc0932360f59712e520e3927d0e8ef1e601b"
+  ],
+  "dac/vale/styles/ai-tells/SelfReference.yml": [
+    "sha256:cb013f2a35897103a24550068436a813da0cf68f5f1a9fc8bd19943e30682679"
+  ],
+  "dac/vale/styles/ai-tells/SemicolonUsage.yml": [
+    "sha256:a60d10525c25fc461c99279836e0ae5eff73286b63f74b25674db5b8b7804bac"
+  ],
+  "dac/vale/styles/ai-tells/SequencingMarkers.yml": [
+    "sha256:a87fd9916c0f77a358de46950511fb211e5caf5a605e57f144c9364130d95f50"
+  ],
+  "dac/vale/styles/ai-tells/ServesAsDodge.yml": [
+    "sha256:89687f852c7d829aececba1198c260aeabfbece77c0a5af4884448c8224024a0"
+  ],
+  "dac/vale/styles/ai-tells/ShipOveruse.yml": [
+    "sha256:292affb58f09aa2c3c0e85ddb556e4103c839c7bc6c809aa8ec9b94bdbb87e8c"
+  ],
+  "dac/vale/styles/ai-tells/StackedAnaphora.yml": [
+    "sha256:51e0e987cf9941568526a993c95d2b718314e2e5fa370a07c9cfd7ee5179f89c"
+  ],
+  "dac/vale/styles/ai-tells/StrategyBuzzwords.yml": [
+    "sha256:c656908ecb0260be2969451c28ae6984557d32abcf72a371ff039af38c7dec47"
+  ],
+  "dac/vale/styles/ai-tells/StructureAnnouncements.yml": [
+    "sha256:1a690a3ea35085fb53767b90ae3976f29a9c9810d5d84cd0e5257b3021a7ae9d"
+  ],
+  "dac/vale/styles/ai-tells/SycophancyMarkers.yml": [
+    "sha256:0cc457996919c18c4b1f2d74b9b6fd5f0f4f68ddb11e3ceaf5915f6f4a3233cf"
+  ],
+  "dac/vale/styles/ai-tells/UnpackExplore.yml": [
+    "sha256:8d90d82e35c9cba0df8f4ebd82b78d4722e881c3da346819606279db3edbc13a"
+  ],
+  "dac/vale/styles/ai-tells/UrgencyInflation.yml": [
+    "sha256:aa8a0f71d6fe48a25e1e693618a8674750980cf1162b391ebf4f80a6ad27a8b7"
+  ],
+  "dac/vale/styles/ai-tells/VagueAttributions.yml": [
+    "sha256:482aa4d4c3288677c84bbc282e3f7e2dca73784cd57b2b10b8403728bc5a2c34"
+  ],
+  "dac/vale/styles/ai-tells/VerbTricolon.yml": [
+    "sha256:0f25b076f7dc0d4bded043c68e5c5206f5d26fa074a56f6ead554356f2625b61"
+  ],
+  "dac/vale/styles/ai-tells/VerbTricolonDensity.yml": [
+    "sha256:bb4dc9d5cfaacbdcd7c67a04b2658f9a3bebb1cb5ba044f4957840c1cd2d50a1"
+  ],
+  "dac/vale/styles/ai-tells/WrapUpHeadings.yml": [
+    "sha256:ae6746756c948e188e47756ec28cf691aec1688c4cb677ebc0d8c2954089e778"
+  ],
   "dac/vale/styles/config/vocabularies/ArchitectureDocs/accept.txt": [
     "sha256:01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
   ],
   "dac/vale/styles/config/vocabularies/ArchitectureDocs/reject.txt": [
     "sha256:01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+  ],
+  "dac/vale/styles/write-good/Cliches.yml": [
+    "sha256:8889c96b78c96a0ea7b05f514dd3035d87f9670d21d7a9422cf0b0f582e336a1"
+  ],
+  "dac/vale/styles/write-good/E-Prime.yml": [
+    "sha256:5f0cb504a9adaa6dbcb535f60b5a806e6a1517017a0dc66a4c15f4e90e827896"
+  ],
+  "dac/vale/styles/write-good/Illusions.yml": [
+    "sha256:6c362d8d6a960928e4465756e6b093182d06ba3e2b59005281a5dfebb5bff07b"
+  ],
+  "dac/vale/styles/write-good/Passive.yml": [
+    "sha256:c0d702236dc8b128f9ce7c26bde0754f17c962798744379f2d2113e98834f012"
+  ],
+  "dac/vale/styles/write-good/README.md": [
+    "sha256:8826e2193035d98c38a7ef1560f1677ce7e9c305e2de48d469276e877b2d42f7"
+  ],
+  "dac/vale/styles/write-good/So.yml": [
+    "sha256:ff7e8b290e0274d116c33f13d99e2b7c710068ee619f22926774f982b003c432"
+  ],
+  "dac/vale/styles/write-good/ThereIs.yml": [
+    "sha256:8877286f0efc806f0dbc6bd4127021c8ed71925fc88f485a044abfccacfeb829"
+  ],
+  "dac/vale/styles/write-good/TooWordy.yml": [
+    "sha256:79c423bef70b00186b71637dc64b964b3270272221febe836e49e2887ca40b40"
+  ],
+  "dac/vale/styles/write-good/Weasel.yml": [
+    "sha256:a5b5bc0de632dd09f3dee86c70d1f0bf5c607ec9b6462af8f992a14fcfe2a0fc"
+  ],
+  "dac/vale/styles/write-good/meta.json": [
+    "sha256:52830ffa5868d3534b78475b576ba3eaba6f9f6f665f5aec5cf2e2c36a876391"
   ],
   "devfile.yaml": [
     "sha256:fe888bedb776f500621ca6a94648c2c1e4f17f381b5fee6a893dd7d23d776714",
