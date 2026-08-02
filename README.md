@@ -127,6 +127,33 @@ folder produces a `scan path not found` warning on every build.
 
 Nothing else is required — the tools come from the image.
 
+### Adopting on an Existing Corpus
+
+The formal-document machinery is opt-in per file. The front matter gate
+skips any Markdown file without a front matter block, and the DOCX build
+scans only documents that carry one. Your legacy content is ignored until
+you migrate it — one document at a time, by adding front matter from a
+template. Nothing forces a bulk conversion.
+
+Markdown lint, encoding artifacts, and Mermaid preflight check the whole
+corpus regardless — every `.md` in the repository, front matter or not. On a
+corpus with history, expect the first CI run to fail on files nobody has
+touched. [TROUBLESHOOTING.md](TROUBLESHOOTING.md) ("Every document fails the
+gates on day one") covers the ways through — fix by rule category across all
+documents, which goes much faster than file by file, or change the rules
+that do not fit your content.
+
+A sequence that fits those behaviors:
+
+1. Install the toolset (`dac-init`) and confirm a build runs.
+2. Put new documents on the pipeline immediately; migrate old ones as you
+   touch them.
+3. Clean the corpus against the three whole-corpus gates, one rule category
+   at a time.
+4. Protect the branch and require the blocking checks once the corpus passes
+   them. Required checks a corpus cannot pass teach the team
+   `git commit --no-verify`, and then they gate nothing.
+
 ---
 
 ## Where the Toolchain Runs
