@@ -16,14 +16,27 @@ configuration.
 
 ## Branching
 
-Recommended branch model:
+This repository is trunk-based:
 
 ```text
-main        stable default branch
-develop     integration branch for upcoming changes
-feature/*   short-lived feature branches
-fix/*       short-lived fix branches
+main        stable default branch; PRs merge here
+feature/*   short-lived feature branches, deleted on merge
+fix/*       short-lived fix branches, deleted on merge
+docs/*      documentation-only changes
 ```
+
+Adopters do not have to copy that. A documentation repo with a review or
+publication step often wants a long-lived integration branch as well:
+
+```text
+master      published; what stakeholders receive
+develop     integration branch; drafts accumulate here
+```
+
+Pick by whether "merged" and "published" are the same event for your team.
+They are here — a merge to `main` is the release — so a second long-lived
+branch would only be a place for work to go stale. Where publication is a
+separate, slower step, `develop` earns its keep.
 
 If your hosting platform supports template repositories, mark this repo as a
 template after the initial baseline is stable.
