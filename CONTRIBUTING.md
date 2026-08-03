@@ -16,14 +16,35 @@ configuration.
 
 ## Branching
 
-Recommended branch model:
+This repository is trunk-based:
 
 ```text
-main        stable default branch
-develop     integration branch for upcoming changes
-feature/*   short-lived feature branches
-fix/*       short-lived fix branches
+main        stable default branch; PRs merge here
+feature/*   short-lived feature branches, deleted on merge
+fix/*       short-lived fix branches, deleted on merge
+docs/*      documentation-only changes
 ```
+
+Adopters do not have to copy that. A documentation repo whose readers track
+a branch often wants a long-lived integration branch as well:
+
+```text
+main (or master)   published; what readers receive
+develop            integration branch; drafts accumulate here
+```
+
+Pick by asking **what marks a release**:
+
+- **A tag marks it.** The trunk can hold merged-but-unreleased work safely,
+  because the tag decides what ships. One long-lived branch is enough — a
+  second would only be somewhere for work to go stale. That is this
+  repository: merging to `main` publishes nothing on its own; a `vX.Y.Z` tag
+  starts the release, and the toolkit then vendors that tag.
+- **A branch marks it.** If readers open the repository and see the branch,
+  or if published exports are generated from it, then merging *is*
+  publishing, and unfinished work on that branch is visible to your
+  audience. That is what `develop` is for: somewhere to accumulate drafts
+  that the audience should not see yet.
 
 If your hosting platform supports template repositories, mark this repo as a
 template after the initial baseline is stable.
