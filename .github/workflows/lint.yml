@@ -66,10 +66,16 @@ jobs:
     container: ghcr.io/khalilgibrotha/dac-toolkit:latest
     steps:
       - uses: actions/checkout@v4
-      # This check reads the git index, not the working tree, and the
-      # checkout is owned by a different uid than the container user. Git
-      # refuses to read a repository it considers dubiously owned, so
-      # without this the job fails on ownership rather than line endings.
+      # This check reads the git index, not the working tree, so it needs git
+      # to trust the checkout - which is owned by a different uid than the
+      # container user, and git refuses a repository it considers dubiously
+      # owned.
+      #
+      # actions/checkout already does this (set-safe-directory defaults to
+      # true), so this step is belt-and-braces here and only earns its place
+      # if someone turns that off. It is not redundant everywhere: running
+      # the same check locally against a bind mount fails without it, which
+      # is worth knowing before anyone debugs that from scratch.
       - name: Trust the checkout
         run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
       - name: Check tracked files for CRLF and misclassified text
