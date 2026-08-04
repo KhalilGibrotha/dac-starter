@@ -60,6 +60,31 @@ jobs:
             echo
           } >> "$GITHUB_STEP_SUMMARY"
 
+  line-endings:
+    name: Line endings
+    runs-on: ubuntu-latest
+    container: ghcr.io/khalilgibrotha/dac-toolkit:latest
+    steps:
+      - uses: actions/checkout@v4
+      # This check reads the git index, not the working tree, and the
+      # checkout is owned by a different uid than the container user. Git
+      # refuses to read a repository it considers dubiously owned, so
+      # without this the job fails on ownership rather than line endings.
+      - name: Trust the checkout
+        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
+      - name: Check tracked files for CRLF and misclassified text
+        run: |
+          set -o pipefail
+          lint-line-endings.py --path . 2>&1 | tee gate-out.txt
+      - name: Job summary
+        if: always()
+        run: |
+          {
+            echo "## Line endings - ${{ job.status }}"
+            grep -aE "Checked .* file" gate-out.txt | tail -n 1 || true
+            echo
+          } >> "$GITHUB_STEP_SUMMARY"
+
   frontmatter:
     name: Front matter validation
     runs-on: ubuntu-latest
