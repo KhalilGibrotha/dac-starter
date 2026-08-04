@@ -1,26 +1,76 @@
-# Line endings for anything that executes inside the Linux container or as a
-# git hook. CRLF is invisible on Windows and fatal there — bash reads the CR
-# as part of the last token on every line, so a script silently takes the
-# wrong branch and reports success.
+# ─── Line endings ────────────────────────────────────────────────────────────
 #
-# An attribute cannot rescue a file git has already classified as binary. If a
-# script misbehaves, run `git ls-files --eol <path>`: `i/-text` means the rule
-# was skipped, usually because a raw control byte is embedded in the source.
-# Remove the byte first, then `git add --renormalize`.
-*.sh        text eol=lf
-*.py        text eol=lf
-*.yml       text eol=lf
-*.yaml      text eol=lf
-.githooks/* text eol=lf
+# EVERY text file is LF, in the index and in the working tree. This line is
+# the whole fix; the rest of the file is exceptions and diff behaviour.
+#
+# Why a catch-all rather than a list of extensions: the previous version
+# pinned eol=lf for *.sh, *.py, *.yml, *.yaml and stopped there. Markdown was
+# not covered, so 220 of 289 tracked files carried CRLF in the index, and any
+# editor writing LF turned a four-line edit into a whole-file rewrite.
+# A whole-file diff for a four-line change is not reviewable, which defeats
+# the point of keeping documents in git at all. Adopters inherit this file,
+# so getting it right here fixes it everywhere downstream.
+#
+# This also overrides core.autocrlf, which is set to true in every local
+# clone here. .gitattributes wins over that setting, so behaviour no longer
+# depends on how an individual machine is configured — which is the actual
+# prevention. A new contributor on Windows gets LF whether or not they know
+# what autocrlf is.
+#
+# `text=auto` lets git decide what is text; the binary list below removes the
+# guesswork for formats where a wrong guess corrupts the file.
+* text=auto eol=lf
 
-# Markdown is normalized to LF as well as getting the prose diff driver.
-# diff=markdown alone only selects a diff driver; line endings stay governed by
-# the checkout's core.autocrlf. On a Windows clone that writes every .md as
-# CRLF, which the container's git then reports as modified -- phantom changes
-# on files nobody touched, and real line-ending churn the moment one is
-# committed from inside the container.
+# ─── Binary: never convert, never diff as text ───────────────────────────────
 #
-# The built-in markdown driver puts the enclosing heading in the hunk header
-# instead of a random nearby line.
-*.md   text eol=lf diff=markdown
-*.qmd  text eol=lf diff=markdown
+# Generated documents and images. Marking them explicitly rather than relying
+# on git's heuristic: a rendered DOCX that git decides is "text" gets its
+# line endings rewritten and stops opening.
+*.pptx  binary
+*.docx  binary
+*.pdf   binary
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.gif   binary
+*.ico   binary
+*.woff  binary
+*.woff2 binary
+*.ttf   binary
+*.otf   binary
+*.zip   binary
+*.xlsx  binary
+
+# ─── Prose-friendly diffs ────────────────────────────────────────────────────
+#
+# diff=markdown activates git's BUILT-IN markdown userdiff driver (git >=
+# 2.32, no configuration required — verified on git 2.50: hunk headers change
+# from a random nearby paragraph line to the enclosing heading, e.g.
+# "@@ -53,3 +53,3 @@ ## Prerequisites"). The driver also supplies a
+# prose-aware word regex that `git diff --word-diff` picks up automatically.
+#
+# Word-level diffing itself is per-invocation, not per-attribute:
+#   git diff --word-diff                    # {+added+} / [-removed-] inline
+#   git diff --word-diff=color              # colored words, no markers
+*.md   diff=markdown
+*.qmd  diff=markdown
+
+# ─── Diagnosing a file that still misbehaves ─────────────────────────────────
+#
+# `git ls-files --eol <path>` reports what git actually believes:
+#   i/lf   w/lf    correct
+#   i/crlf         CRLF is committed; run `git add --renormalize .`
+#   i/-text        git classified the file as BINARY, so no eol rule applies
+#
+# The last one is the trap. An attribute cannot rescue a file git has already
+# decided is binary, and the usual cause is a raw control byte embedded in
+# the source — a literal CR inside a string, say. Remove the byte first, then
+# renormalize; until then the rule above is silently skipped.
+#
+# Do not "harden" this by restoring per-extension `*.sh text eol=lf` rules.
+# That was measured against exactly this case and changes nothing: a .sh file
+# holding a lone CR lands at i/-text under the catch-all and under an explicit
+# rule alike, because the attribute requests a conversion git's detector never
+# runs. An ordinary CRLF file normalizes to i/lf under both. What catches the
+# binary case is the line-endings CI job, which reads `git ls-files --eol` and
+# fails on i/-text for a known text extension.
