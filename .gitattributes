@@ -6,7 +6,7 @@
 # Why a catch-all rather than a list of extensions: the previous version
 # pinned eol=lf for *.sh, *.py, *.yml, *.yaml and stopped there. Markdown was
 # not covered, so 220 of 289 tracked files carried CRLF in the index, and any
-# editor writing LF turned a four-line edit into a whole-file rewrite. A
+# editor writing LF turned a four-line edit into a whole-file rewrite.
 # A whole-file diff for a four-line change is not reviewable, which defeats
 # the point of keeping documents in git at all. Adopters inherit this file,
 # so getting it right here fixes it everywhere downstream.
@@ -66,3 +66,11 @@
 # decided is binary, and the usual cause is a raw control byte embedded in
 # the source — a literal CR inside a string, say. Remove the byte first, then
 # renormalize; until then the rule above is silently skipped.
+#
+# Do not "harden" this by restoring per-extension `*.sh text eol=lf` rules.
+# That was measured against exactly this case and changes nothing: a .sh file
+# holding a lone CR lands at i/-text under the catch-all and under an explicit
+# rule alike, because the attribute requests a conversion git's detector never
+# runs. An ordinary CRLF file normalizes to i/lf under both. What catches the
+# binary case is the line-endings CI job, which reads `git ls-files --eol` and
+# fails on i/-text for a known text extension.
