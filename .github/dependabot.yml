@@ -1,3 +1,4 @@
+---
 version: 2
 
 # Keeps the pinned GitHub Actions in .github/workflows current. Without this
