@@ -1,0 +1,22 @@
+version: 2
+
+# Keeps the pinned GitHub Actions in .github/workflows current. Without this
+# nothing watches them, and a pin ages silently until a deprecated runtime or
+# a retired action breaks CI on a day nobody changed anything.
+#
+# Deliberately NOT tracked here:
+#
+#   the toolkit container image
+#     Workflow jobs run in ghcr.io/khalilgibrotha/dac-toolkit:latest, which
+#     floats on purpose - adopters get toolchain fixes without a bump here.
+#     Dependabot's docker ecosystem reads Dockerfiles, not a `container:` key
+#     in a workflow, so it could not track it regardless.
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    commit-message:
+      prefix: "chore(ci)"
+    labels:
+      - dependencies
